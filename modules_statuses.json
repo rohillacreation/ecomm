@@ -1,0 +1,7 @@
+{
+    "Blog": true,
+    "BuyNow": true,
+    "Payment": true,
+    "Order": true,
+    "Cart": true
+}

@@ -1,0 +1,13 @@
+{
+    "name": "BuyNow",
+    "alias": "buynow",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BuyNow\\Providers\\BuyNowServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
