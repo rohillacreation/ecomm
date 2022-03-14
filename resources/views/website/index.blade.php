@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Creto</title>
-	@include('website.includes.header');
+	@include('website.includes.header')
 </head>
 
 <body id="home" class="inner-scroll">
@@ -35,7 +35,7 @@
 				<li><a href="https://www.instagram.com/rovadex/">instagram</a></li>
 			</ul>
 			<div class="main-slider">
-				{{$i=0}}
+			<?php $i=0; ?>
 				@foreach($data['product'] as $product)
 
 				@if($i++>9) @break
@@ -70,6 +70,9 @@
 		</section>
 		<!-- ============= main-slider end ============= -->
 
+
+
+		
 		<!--================ S-FIND-BIKE ================-->
 		<section class="s-find-bike">
 			<div class="container">
@@ -89,39 +92,19 @@
 						</li>
 						<li>
 							<label >brand</label>
-							<select class="slect_size" onchange="brand_ajex(this.value)" id="brand_select" name ="brand">
-								<option class = "nice-select" value="None">All</option>
 						
-							</select>
+							<input type="text" name="brand" list="brand_select"  onchange="brand_ajex(this.value)" placeholder="All">
+							<datalist class="" id="brand_select" name ="brand">
+							<option class = "nice-select" value="None">All</option>
+						
+							</datalist>
+				
 						</li>
-
-						<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-  <div id="myDropdown" class="dropdown-content">
-    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-    <a href="#about">About</a>
-    <a href="#base">Base</a>
-    <a href="#blog">Blog</a>
-    <a href="#contact">Contact</a>
-    <a href="#custom">Custom</a>
-    <a href="#support">Support</a>
-    <a href="#tools">Tools</a>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
 						<li>
 							<label>color</label>
 							<select  class="slect_size id" id="color_select" name ="color">
-								<option selected="selected" value="None">All</option>
+							<option class = "nice-select" value="None">All</option>
+
 							</select>
 						</li>
 						<li> <button class="btn" type="submit"> Search </button></li>
@@ -189,18 +172,21 @@
 					<div class="products-title-cover">
 						<h2 class="title">our products</h2>
 						<ul class="tab-nav product-tabs">
-							<li class="item" rel="tab1"><span>All</span></li>
-							<li class="item" rel="tab2"><span>Road bike</span></li>
-							<li class="item" rel="tab3"><span>City bike</span></li>
-							<li class="item" rel="tab4"><span>BMX bike</span></li>
+							<li class="item" rel="tab_all"><span>All</span></li>
+							<li class="item" rel="tab{{$data['cetegory'][0]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][0]->id}}"><span>{{$data['cetegory'][0]->name}}</span></li>
+							<li class="item" rel="tab{{$data['cetegory'][1]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][1]->id}}"><span>{{$data['cetegory'][1]->name}}</span></li>
+							<li class="item" rel="tab{{$data['cetegory'][2]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][2]->id}}"><span>{{$data['cetegory'][2]->name}}</span></li>
 						</ul>
 					</div>
 
 					<div class="tabs-content">
-						<div class="tab tab1">
+
+
+					<div class="tab tab_all">
 							<div class="row product-cover">
 
-								@foreach($data['product'] as $product)
+
+							@foreach($data['product'] as $product)
 								<div class="col-sm-6 col-lg-3">
 									<div class="product-item">
 										<!-- <span class="top-sale">top sale</span> -->
@@ -217,25 +203,104 @@
 											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
 											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 										</div>
-										<!-- <div class="prod-info">
-											<ul class="prod-list">
-												<li>Frame Size: <span>17</span></li>
-												<li>Class: <span>City</span></li>
-												<li>Number of speeds: <span>7</span></li>
-												<li>Type: <span>Rigid</span></li>
-												<li>Country registration: <span>USA</span></li>
-											</ul>
-										</div> -->
+									
 									</div>
 								</div>
 								@endforeach
+								{{ $data['product']->links('website.includes.pagination') }}
 
-
-
-
+								<div class="row product-cover">
+		
+								</div>
 
 							</div>
+									</div>
+
+
+
+
+
+						<div class="tab tab{{$data['cetegory'][0]->id}}">
+							<div class="row product-cover">
+
+							@foreach($data['data_by_category'][0] as $product)
+								<div class="col-sm-6 col-lg-3">
+									<div class="product-item">
+										<!-- <span class="top-sale">top sale</span> -->
+										<ul class="product-icon-top">
+											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+										</ul>
+										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
+										<div class="product-item-cover">
+											<div class="price-cover">
+												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
+												<!-- <div class="old-price">$1.799</div> -->
+											</div>
+											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
+											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
+										</div>
+									
+									</div>
+								</div>
+								@endforeach
+							</div>
 						</div>
+
+						<div class="tab tab{{$data['cetegory'][1]->id}}">
+							<div class="row product-cover">
+
+							@foreach($data['data_by_category'][1] as $product)
+								<div class="col-sm-6 col-lg-3">
+									<div class="product-item">
+										<!-- <span class="top-sale">top sale</span> -->
+										<ul class="product-icon-top">
+											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+										</ul>
+										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
+										<div class="product-item-cover">
+											<div class="price-cover">
+												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
+												<!-- <div class="old-price">$1.799</div> -->
+											</div>
+											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
+											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
+										</div>
+									</div>
+								</div>
+								@endforeach
+							</div>
+						</div>
+
+						<div class="tab tab{{$data['cetegory'][2]->id}}">
+							<div class="row product-cover">
+
+							@foreach($data['data_by_category'][2] as $product)
+								<div class="col-sm-6 col-lg-3">
+									<div class="product-item">
+										<!-- <span class="top-sale">top sale</span> -->
+										<ul class="product-icon-top">
+											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+										</ul>
+										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
+										<div class="product-item-cover">
+											<div class="price-cover">
+												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
+												<!-- <div class="old-price">$1.799</div> -->
+											</div>
+											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
+											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
+										</div>
+									</div>
+								</div>
+								@endforeach
+							</div>
+						</div>
+
+
+
 					</div>
 				</div>
 		</section>
@@ -293,6 +358,8 @@
 												<li>Country registration: <span>USA</span></li>
 											</ul>
 										</div> -->
+										{{ $data['product']->links('website.includes.pagination') }}
+
 						</div>
 					</div>
 					@endforeach
@@ -483,7 +550,7 @@
 		<!--=================== TO TOP END ===================-->
 		<!--==================== SCRIPT	====================-->
 		<script>
-		function type_ajex(cat_id){          
+function type_ajex(cat_id){          
 $.ajax({
 	url: 'brand_ajax',
 	type: 'post',
@@ -502,6 +569,7 @@ $.ajax({
 // catagory ajax
 
 function brand_ajex(brand_id){     
+
 $.ajax({
 	url: 'color_ajax',
 	type: 'post',

@@ -11,10 +11,12 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\commanController;
 use App\Http\Controllers\Live_searchController;
+use App\Models\Brand;
 use App\Models\Product;
-use App\Models\Category; 
+use App\Models\Category;
 use App\Models\Image_table;
 use App\Models\Variations;
+use App\Models\Color;
 
 
 
@@ -35,100 +37,118 @@ Route::get('/', function () {
 
 // webiste routs
 
-function all_product_data($cat_id =null){
-    
-    if($cat_id){
+function all_product_data($cat_id = null)
+{
+
+    if ($cat_id) {
         $products_list = Product::with('category', 'brand')
-        ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
-        ->where('status', 'published')
-        ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
-        ->where('use_type', 'Main_product_image')
-        ->select('products.*', 'galleries.location')->where('products.cat_id' , $cat_id)->get();
+            ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
+            ->where('status', 'published')
+            ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
+            ->where('use_type', 'Main_product_image')
+            ->select('products.*', 'galleries.location')->where('products.cat_id', $cat_id)->get();
+        return $products_list;
+    } else {
+        $products_list = Product::with('category', 'brand')
+            ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
+            ->where('status', 'published')
+            ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
+            ->where('use_type', 'Main_product_image')
+            ->select('products.*', 'galleries.location')->paginate(8);
         return $products_list;
     }
-    else {
-        $products_list = Product::with('category', 'brand')
-    ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
-    ->where('status', 'published')
-    ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
-    ->where('use_type', 'Main_product_image')
-    ->select('products.*', 'galleries.location')->get();
-    return $products_list;
-    }
-  
 }
 
-function Gallery_images($product_id){
-    $image_data = Image_table::where('use_id' , $product_id)->join('galleries' , 'galleries.id' ,'=' ,'image_tables.image_id')->get();
+function Gallery_images($product_id)
+{
+    $image_data = Image_table::where('use_id', $product_id)->join('galleries', 'galleries.id', '=', 'image_tables.image_id')->get();
     return $image_data;
-    }
-    
+}
+
 
 
 Route::get('website', function () {
     // product data
     $data['product'] = all_product_data();
     // category data
-    $data['cetegory']= Category::all()->where('status', 'publish');
-        return view('website.index' ,compact('data'));
+    $data['cetegory'] = Category::all()->where('status', 'publish');
+    // data by category
+    $data_by_category = [];
+    foreach ($data['cetegory'] as $key => $category) {
+        array_push($data_by_category, all_product_data($category->id));
+    }
+    $data['data_by_category'] = $data_by_category;
+
+    //colors
+    $data['color'] = Color::all();
+
+    return view('website.index', compact('data'));
 });
 
 Route::get('service', function () {
-    $data['product']= Product::with('category', 'brand')
-    ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
-    ->where('status', 'published')
-    ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
-    ->where('use_type', 'Main_product_image')
-    ->select('products.*', 'galleries.location')->orderBy('products.id', 'desc')->get();
-    $data['cetegory']= Category::all()->where('status', 'publish');
+    $data['product'] = Product::with('category', 'brand')
+        ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
+        ->where('status', 'published')
+        ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
+        ->where('use_type', 'Main_product_image')
+        ->select('products.*', 'galleries.location')->orderBy('products.id', 'desc')->get();
+    $data['cetegory'] = Category::all()->where('status', 'publish');
 
-        return view('website.services' ,compact('data'));
+    return view('website.services', compact('data'));
 });
 
 Route::get('shop', function () {
-    $data['product'] =all_product_data();
-            return view('website.shop' ,compact('data'));
+    $data['product'] = all_product_data();
+    $data['cetegory'] = Category::all()->where('status', 'publish');
+    $data['brand'] = Brand::all();
+
+
+    return view('website.shop', compact('data'));
 });
-        
+
 Route::get('about', function () {
-    $data['product'] =all_product_data();
-         return view('website.about' ,compact('data'));
+    $data['product'] = all_product_data();
+    return view('website.about', compact('data'));
 });
-  
+
 Route::get('contact', function () {
-    $data['product'] =all_product_data();
-        return view('website.contacts' ,compact('data'));
+    $data['product'] = all_product_data();
+    return view('website.contacts', compact('data'));
 });
-  
+
 
 
 Route::get('gallery', function () {
-    $data['product'] =all_product_data();
-        return view('website.gallery' ,compact('data'));
+    $data['product'] = all_product_data();
+    return view('website.gallery', compact('data'));
 });
-  
+
 Route::get('shopNow/{id}', function ($id) {
     $data['product'] = Product::with('category', 'brand')
-    ->join('image_tables',  'image_tables.use_id', '=', 'products.id')
-    ->where('status', 'published')
-    ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
-    ->where('use_type', 'Main_product_image')
-    ->select('products.*', 'galleries.location')->where('products.id' ,$id)->get();
+        ->join('image_tables',  'image_tables.use_id', '=', 'products.id')
+        ->where('status', 'published')
+        ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
+        ->where('use_type', 'Main_product_image')
+        ->select('products.*', 'galleries.location')->where('products.id', $id)->get();
 
     $data['images'] = Gallery_images($id);
-    $data['colors'] = Variations::select('color' )->where('product_id' , $id)->get();
+    $data['colors'] = Variations::select('color')->where('product_id', $id)->get();
     // suggested products
-    $data['suggested_product'] =all_product_data($data['product'][0]->cat_id);
-        return view('website.shopNow' ,compact('data'));
+    $data['suggested_product'] = all_product_data($data['product'][0]->cat_id);
+    return view('website.shopNow', compact('data'));
 });
 
 // ajax functions 
-Route::post('brand_ajax' , [commanController::class, 'brand_ajax']);
-Route::post('color_ajax' , [commanController::class, 'color_ajax']);
+Route::post('brand_ajax', [commanController::class, 'brand_ajax']);
+Route::post('color_ajax', [commanController::class, 'color_ajax']);
+Route::post('all_filter_ajax', [commanController::class, 'all_filter_ajax']);
+
 // home search
 
-Route::post('home_search' , [commanController::class, 'home_search']);
-Route::get('shop/{cat_id}' , [commanController::class, 'home_search']);
+Route::post('home_search', [commanController::class, 'home_search']);
+Route::get('shop/{cat_id}', [commanController::class, 'home_search']);
+
+
 
 
 
@@ -226,7 +246,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('find_product', 'ProductController@find_product')->name('find_product');
         Route::get('All_product', 'ProductController@List_product')->name('All_product');
         Route::post('addproduct', 'ProductController@create_product')->name('AddProduct');
-        
+
         Route::post('update_product', 'ProductController@update_product')->name('update_product');
         Route::get('product_edit/{id?}', 'ProductController@edit')->name('product_edit');
         Route::get('product_delete/{id?}', 'ProductController@delete')->name('product_delete');

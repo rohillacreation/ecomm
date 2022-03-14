@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Category;
 
 class BrandController extends Controller
 {
     public function index()
     {
         $data = brand::paginate(10);
-
+        // $categories = Category::all()->pluck('name','id');
         return view('admin.oprations.brands.brand', ['members' => $data]);
     }
 
@@ -21,6 +22,7 @@ class BrandController extends Controller
             'name' => 'required',
         ]);
 
+       
         $data = new brand;
 
         $data->name = $request->input('name');

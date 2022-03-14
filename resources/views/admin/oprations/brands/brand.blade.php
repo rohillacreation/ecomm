@@ -50,6 +50,7 @@
                             <thead>
                                 <th>#.</th>
                                 <th>Name</th>
+                                <!-- <th>Category</th> -->
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -82,12 +83,14 @@
 
                                 @csrf
         
+            
                                 <div class="form-group row mb-3">
                                     <label for="title" class="col-sm-3 col-form-label">Brand Name<span>*</span></label>
                                     <div class="col-sm-9">
                                         <input name="name" value="" type="text" class="form-control" placeholder="Name">
                                     </div>
                                 </div>
+
         
                                 <button type="submit" id="Submit_form" class="btn btn-warning">Done</button>
                                 

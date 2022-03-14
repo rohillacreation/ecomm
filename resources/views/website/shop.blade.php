@@ -46,38 +46,20 @@
 						<li class="widget wiget-shop-category">
 							<h5 class="title">bikes</h5>
 							<ul>
-								<li><p><input type="checkbox" checked><span>Road Bike</span></p></li>
-								<li><p><input type="checkbox"><span>Mountain Bike</span></p></li>
-								<li><p><input type="checkbox"><span>BMX Bike</span></p></li>
-								<li><p><input type="checkbox"><span>City Bike</span></p></li>
-								<li><p><input type="checkbox"><span>Kids Bike</span></p></li>
-							</ul>
-						</li>
-						<li class="widget wiget-price">
-							<h5 class="title">price($)</h5>
-							<div id="slider-range"></div>
-							<div class="amount-cover">
-								<input type="text" id="amount-min">
-								<span>&mdash;</span>
-								<input type="text" id="amount-max">
-							</div>
-						</li>
-						<li class="widget wiget-gender">
-							<h5 class="title">gender</h5>
-							<ul>
-								<li><p><input type="checkbox"><span>Men’s</span></p></li>
-								<li><p><input type="checkbox"><span>Women’s</span></p></li>
-								<li><p><input type="checkbox"><span>Kids</span></p></li>
+								<?php $i=1; ?>
+				@foreach($data['cetegory'] as $cetegory)
+								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></p></li>
+					@endforeach
 							</ul>
 						</li>
 						<li class="widget wiget-brand">
 							<h5 class="title">brand</h5>
 							<ul>
-								<li><p><input type="checkbox"><span>Focus</span></p></li>
-								<li><p><input type="checkbox"><span>Radon</span></p></li>
-								<li><p><input type="checkbox"><span>Cube</span></p></li>
-								<li><p><input type="checkbox"><span>Bikes</span></p></li>
-								<li><p><input type="checkbox"><span>Cruzee</span></p></li>
+								<?php $i=1; ?>
+								@foreach($data['brand'] as $brand)
+								<li><p><input type="checkbox" id="brand{{$i++}}" onclick="cat_filter()" value="{{$brand->id}}"><span>{{$brand->name}}</span></p></li>
+								@endforeach
+								
 							</ul>
 						</li>
 						<li class="widget wiget-color">
@@ -129,11 +111,9 @@
 						</div>
 					</div>
 					<div class="shop-product-cover">
-						<div class="row product-cover block">
-
-						
-					@if(isset($data['product']))
-						@foreach($data['product'] as $product)
+				<div class="row product-cover block"  id="data_elements">		
+							@if(isset($data['product']))
+								@foreach($data['product'] as $product)
 							<div class="col-sm-6 col-lg-3">
 									<div class="product-item">
 										<!-- <span class="top-sale">top sale</span> -->
@@ -150,24 +130,16 @@
 											<h6 class="prod-title"><a href="asset('shopNow/'.$product->id)}}">{{$product->name}}</a></h6>
 														<a href="{{asset('shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 										</div>
-										<!-- <div class="prod-info">
-											<ul class="prod-list">
-												<li>Frame Size: <span>17</span></li>
-												<li>Class: <span>City</span></li>
-												<li>Number of speeds: <span>7</span></li>
-												<li>Type: <span>Rigid</span></li>
-												<li>Country registration: <span>USA</span></li>
-											</ul>
-										</div> -->
+									
 									</div>
 								</div>
-@endforeach
+								@endforeach
 
-@endif
-
-
+								@endif
 
 						</div>
+
+
 						<div class="pagination-cover">
 							<ul class="pagination">
 								<li class="pagination-item item-prev"><a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
@@ -181,6 +153,8 @@
 						</div>
 					</div>
 				</div>
+		
+		
 			</div>
 		</div>
 	</section>
@@ -191,6 +165,132 @@
 	<a class="to-top" href="#home">
 		<i class="fa fa-angle-double-up" aria-hidden="true"></i>
 	</a>
+
+<script>
+
+function cat_filter(){
+	var cat_arr =[];
+if(document.getElementById('cat1')!= null){
+	if(document.getElementById('cat1').checked) {
+	cat_arr.push(document.getElementById('cat1').value);
+}}
+if(document.getElementById('cat2')!= null){
+	if(document.getElementById('cat2').checked) {
+	cat_arr.push(document.getElementById('cat2').value);
+}}
+
+if(document.getElementById('cat3')!= null){
+	if(document.getElementById('cat3').checked) {
+	cat_arr.push(document.getElementById('cat3').value);
+}}
+
+if(document.getElementById('cat4')!= null){
+	if(document.getElementById('cat4').checked) {
+	cat_arr.push(document.getElementById('cat4').value);
+}}
+
+if(document.getElementById('cat5')!= null){
+	if(document.getElementById('cat5').checked) {
+	cat_arr.push(document.getElementById('cat5').value);
+}}
+if(document.getElementById('cat6')!= null){
+	if(document.getElementById('cat6').checked) {
+	cat_arr.push(document.getElementById('cat5').value);
+}}
+
+if(document.getElementById('cat7')!= null){
+	if(document.getElementById('cat7').checked) {
+	cat_arr.push(document.getElementById('cat7').value);
+}}
+
+// brands
+
+var brand=[];
+if(document.getElementById('brand1')!= null){
+	if(document.getElementById('brand1').checked) {
+		brand.push(document.getElementById('brand1').value);
+}}
+if(document.getElementById('brand2')!= null){
+	if(document.getElementById('brand2').checked) {
+		brand.push(document.getElementById('brand2').value);
+}}
+if(document.getElementById('brand3')!= null){
+	if(document.getElementById('brand3').checked) {
+		brand.push(document.getElementById('brand3').value);
+}}
+if(document.getElementById('brand4')!= null){
+	if(document.getElementById('brand4').checked) {
+		brand.push(document.getElementById('brand4').value);
+}}
+if(document.getElementById('brand5')!= null){
+	if(document.getElementById('brand5').checked) {
+		brand.push(document.getElementById('brand5').value);
+}}
+if(document.getElementById('brand6')!= null){
+	if(document.getElementById('brand6').checked) {
+		brand.push(document.getElementById('brand6').value);
+}}
+if(document.getElementById('brand7')!= null){
+	if(document.getElementById('brand7').checked) {
+		brand.push(document.getElementById('brand7').value);
+}}
+if(document.getElementById('brand8')!= null){
+	if(document.getElementById('brand8').checked) {
+		brand.push(document.getElementById('brand8').value);
+}}
+if(document.getElementById('brand9')!= null){
+	if(document.getElementById('brand9').checked) {
+		brand.push(document.getElementById('brand9').value);
+}}
+if(document.getElementById('brand10')!= null){
+	if(document.getElementById('brand7').checked) {
+		brand.push(document.getElementById('brand10').value);
+}}
+if(document.getElementById('brand11')!= null){
+	if(document.getElementById('brand11').checked) {
+		brand.push(document.getElementById('brand11').value);
+}}
+if(document.getElementById('brand12')!= null){
+	if(document.getElementById('brand12').checked) {
+		brand.push(document.getElementById('brand12').value);
+}}
+if(document.getElementById('brand13')!= null){
+	if(document.getElementById('brand13').checked) {
+		brand.push(document.getElementById('brand13').value);
+}}
+if(document.getElementById('brand14')!= null){
+	if(document.getElementById('brand14').checked) {
+		brand.push(document.getElementById('brand14').value);
+}}
+if(document.getElementById('brand15')!= null){
+	if(document.getElementById('brand15').checked) {
+		brand.push(document.getElementById('brand15').value);
+}}
+
+
+var color =[];
+       
+$.ajax({
+	url: 'all_filter_ajax',
+	type: 'post',
+	data: {
+
+		" _token": '{{csrf_token()}}',
+		"cat":cat_arr,
+		"brand":brand,
+		"color":color
+
+	},
+	success: function(result) {	
+	
+console.log(result);
+	 $('#data_elements').html(result);
+	
+	}
+
+});
+}
+	</script>
 
 </body>
 </html>
