@@ -56,13 +56,16 @@ class commanController extends Controller
     public function home_search(Request $request)
     {
 
+        $data['cetegory'] = Category::all()->where('status', 'publish');
+        $data['brand'] = Brand::all();
+        $data['colors'] = Color::all();
         if ($request->type != 'None' && $request->brand == null && $request->color == 'None') {
             $data['product'] = Product::with('category', 'brand')
                 ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
                 ->where('status', 'published')
                 ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
                 ->where('use_type', 'Main_product_image')
-                ->select('products.*', 'galleries.location')->where('products.cat_id', $request->type)->get();
+                ->select('products.*', 'galleries.location')->where('products.cat_id', $request->type)->paginate(8);
         }
         if ($request->type != 'None' && $request->brand != null && $request->color == 'None') {
             // get brand_id
@@ -74,18 +77,20 @@ class commanController extends Controller
                 ->where('use_type', 'Main_product_image')
                 ->select('products.*', 'galleries.location')->where('products.cat_id', $request->type)
                 ->where('products.brand_id', $brand[$request->brand])
-                ->get();
+                ->paginate(8);
+              
         }
         if ($request->type != 'None' && isset($request->brand) && $request->brand != null && $request->color != 'None') {
+            $brand = Brand::all()->pluck('id', 'name');
             $data['product'] = Product::with('category', 'brand')
                 ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
                 ->where('status', 'published')
                 ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
                 ->where('use_type', 'Main_product_image')
                 ->select('products.*', 'galleries.location')->where('products.cat_id', $request->type)
-                ->where('products.brand_id', $request->brand)->join('variations', 'products.id', '=', 'variations.product_id')
+                ->where('products.brand_id', $brand[$request->brand])->join('variations', 'products.id', '=', 'variations.product_id')
                 ->where('variations.color', $request->color)
-                ->get();
+                ->paginate(8);
         }
         if (isset($request->cat_id)) {
             $data['product'] = Product::with('category', 'brand')
@@ -94,9 +99,8 @@ class commanController extends Controller
                 ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
                 ->where('use_type', 'Main_product_image')
                 ->select('products.*', 'galleries.location')->where('products.cat_id', $request->cat_id)
-                ->get();
+                ->paginate(8);
         }
-
         return view('website.shop', compact('data'));
     }
 
@@ -148,7 +152,8 @@ class commanController extends Controller
                 ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
                 ->where('use_type', 'Main_product_image')
                 ->select('products.*', 'galleries.location')->whereIn('products.brand_id', $request->brand) ;
-        } else {
+        } 
+        if (!isset($request->cat) && !isset($request->brand)) {
             $products['product'] = Product::with('category', 'brand')
             ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
             ->where('status', 'published')
@@ -162,7 +167,9 @@ class commanController extends Controller
         $products['product'] = $products['product']->offset($offset)->take(4)->get();
 
         $result = '';
-        $base_path = 'uploads/gallery/';
+        $uri = $_SERVER['HTTP_HOST'];
+
+        $base_path ='/'.'uploads/gallery/';
         foreach ($products['product'] as $product) {
             if (isset($request->amount_min) && $request->amount_min != null) {
                 $total_count = 0;

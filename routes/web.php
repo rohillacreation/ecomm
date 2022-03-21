@@ -35,7 +35,7 @@ Route::get('/', function () {
 });
 
 
-// webiste routs
+// webiste rout
 
 function all_product_data($cat_id = null)
 {
@@ -46,7 +46,7 @@ function all_product_data($cat_id = null)
             ->where('status', 'published')
             ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
             ->where('use_type', 'Main_product_image')
-            ->select('products.*', 'galleries.location')->where('products.cat_id', $cat_id)->get();
+            ->select('products.*', 'galleries.location')->where('products.cat_id', $cat_id)->paginate(8);
         return $products_list;
     } else {
         $products_list = Product::with('category', 'brand')
@@ -144,11 +144,13 @@ Route::get('shopNow/{id}', function ($id) {
 Route::post('brand_ajax', [commanController::class, 'brand_ajax']);
 Route::post('color_ajax', [commanController::class, 'color_ajax']);
 Route::post('all_filter_ajax', [commanController::class, 'all_filter_ajax']);
+Route::post('shop/all_filter_ajax', [commanController::class, 'all_filter_ajax'])->name('all_filter_ajax');;
+
 
 // home search
 
 Route::post('home_search', [commanController::class, 'home_search']);
-Route::get('shop/{cat_id}', [commanController::class, 'home_search']);
+Route::post('shop/{cat_id}', [commanController::class, 'home_search']);
 
 
 

@@ -69,8 +69,8 @@
 							<ul>
 								<?php $i=1; ?>
 
-							@foreach($data['cetegory'] as $cetegory)
-								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->name}}"><span>{{$cetegory->name}}</span></p></li>
+									@foreach($data['cetegory'] as $cetegory)
+								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></p></li>
 							@endforeach
 							</ul>
 						</li>
@@ -145,7 +145,8 @@
 											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
 										</ul>
 										<a href="{{asset('uploads/gallery/'.$product->location)}}" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
-										<div class="product-item-cover">
+									
+	<div class="product-item-cover">
 											<div class="price-cover">
 												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i>  {{$product->price}} </div>
 												<!-- <div class="old-price">$1.799</div> -->

@@ -32,7 +32,7 @@
 		</div>
 		<div class="header-menu">
 			<div class="container">
-				<a href="index.html" class="logo"><img src="assets/img/logo.svg" alt="logo"></a>
+				<a href="index.html" class="logo"><img src="{{asset('assets/img/logo.svg')}}" alt="logo"></a>
 				<nav class="nav-menu">
 					<ul class="nav-list">
 						<li class="dropdown" id='website'><a href="{{asset('/website')}}">Home </a></li>

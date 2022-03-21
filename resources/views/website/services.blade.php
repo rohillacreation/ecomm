@@ -42,7 +42,11 @@
 							<img src="assets/img/categ-2.png" alt="category">
 							<div class="categ-bicycle-info">
 								<h4 class="title">{{$cetegory['name']}}</h4>
-								<a href="{{asset('shop/'.$cetegory->id)}}" class="btn"><span>view more</span></a>
+								<form action="{{asset('shop/'.$cetegory->id)}}" method="post">
+									@csrf
+								<button href="" class="btn"><span>view more</span></button>
+							</form>
+							
 							</div>
 						</div>
 					</div>
