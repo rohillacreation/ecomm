@@ -122,7 +122,7 @@
 					@foreach($data['cetegory'] as $cetegory)
 					<div class="slide-categ-bicycle">
 						<div class="categ-bicycle-item">
-							<img src="assets/img/categ-2.png" alt="category">
+							<img src="{{asset('assets/img/categ-2.png')	}}" alt="category">
 							<div class="categ-bicycle-info">
 								<h4 class="title">{{$cetegory['name']}}</h4>
 								<a href="{{asset('shop/'.$cetegory->id)}}" class="btn"><span>view more</span></a>
@@ -145,19 +145,19 @@
 				<h2 class="title">Our Advantages</h2>
 				<div class="our-advantages-wrap">
 					<div class="our-advantages-item">
-						<img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/advantages-1.svg" alt="icon">
+						<img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="{{asset('assets/img/advantages-1.svg')}}" alt="icon">
 						<h5>Free shipping <br>from $500</h5>
 					</div>
 					<div class="our-advantages-item">
-						<img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/advantages-2.svg" alt="icon">
+						<img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="{{asset('assets/img/advantages-1.svg')}}" alt="icon">
 						<h5>Warranty service <br>for 3 months</h5>
 					</div>
 					<div class="our-advantages-item">
-						<img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/advantages-3.svg" alt="icon">
+						<img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="{{asset('assets/img/advantages-1.svg')}}" alt="icon">
 						<h5>Exchange and return <br>within 14 days</h5>
 					</div>
 					<div class="our-advantages-item">
-						<img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/advantages-4.svg" alt="icon">
+						<img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="{{asset('assets/img/advantages-1.svg')}}" alt="icon">
 						<h5>Discounts for <br>customers</h5>
 					</div>
 				</div>
@@ -349,20 +349,11 @@
 								<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
 								<a href="{{asset('shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 							</div>
-							<!-- <div class="prod-info">
-											<ul class="prod-list">
-												<li>Frame Size: <span>17</span></li>
-												<li>Class: <span>City</span></li>
-												<li>Number of speeds: <span>7</span></li>
-												<li>Type: <span>Rigid</span></li>
-												<li>Country registration: <span>USA</span></li>
-											</ul>
-										</div> -->
-										{{ $data['product']->links('website.includes.pagination') }}
 
 						</div>
 					</div>
 					@endforeach
+					{{ $data['product']->links('website.includes.pagination') }}
 
 
 
@@ -380,7 +371,7 @@
 						<div class="news-item">
 							<h6 class="title"><a href="news.html">doloremque laudantium, totam rem aperiam, eaque ipsa quae</a></h6>
 							<div class="news-post-thumbnail">
-								<a href="news.html"><img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/news-1.jpg" alt="news"></a>
+								<a href="news.html"><img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="assets/img/news-1.jpg" alt="news"></a>
 							</div>
 							<div class="meta">
 								<span class="date"><i class="fa fa-calendar" aria-hidden="true"></i> Dec 26,2019</span>
@@ -396,7 +387,7 @@
 						<div class="news-item">
 							<h6 class="title"><a href="news.html">At vero eos et accusamus et iusto odio dignissimos ducim</a></h6>
 							<div class="news-post-thumbnail">
-								<a href="single-news.html"><img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/news-2.jpg" alt="news"></a>
+								<a href="single-news.html"><img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="assets/img/news-2.jpg" alt="news"></a>
 							</div>
 							<div class="meta">
 								<span class="date"><i class="fa fa-calendar" aria-hidden="true"></i> Dec 26,2019</span>
@@ -412,7 +403,7 @@
 						<div class="news-item">
 							<h6 class="title"><a href="news.html">On the other hand, we denounce with righteous indignation a</a></h6>
 							<div class="news-post-thumbnail">
-								<a href="news.html"><img class="lazy" src="assets/img/placeholder-all.png" data-src="assets/img/news-3.jpg" alt="news"></a>
+								<a href="news.html"><img class="lazy" src="{{asset('assets/img/placeholder-all.png')}}" data-src="assets/img/news-3.jpg" alt="news"></a>
 							</div>
 							<div class="meta">
 								<span class="date"><i class="fa fa-calendar" aria-hidden="true"></i> Dec 26,2019</span>
@@ -436,27 +427,27 @@
 				<div class="clients-cover">
 					<div class="client-slide">
 						<div class="client-slide-cover">
-							<img src="assets/img/client-1.svg" alt="img">
+							<img src="{{asset('assets/img/client-1.svg')}}" alt="img">
 						</div>
 					</div>
 					<div class="client-slide">
 						<div class="client-slide-cover">
-							<img src="assets/img/client-2.svg" alt="img">
+							<img src="{{asset('assets/img/client-2.svg')}}" alt="img">
 						</div>
 					</div>
 					<div class="client-slide">
 						<div class="client-slide-cover">
-							<img src="assets/img/client-4.svg" alt="img">
+							<img src="{{asset('assets/img/client-4.svg')}}" alt="img">
 						</div>
 					</div>
 					<div class="client-slide">
 						<div class="client-slide-cover">
-							<img src="assets/img/client-5.svg" alt="img">
+							<img src="{{asset('assets/img/client-5.svg')}}" alt="img">
 						</div>
 					</div>
 					<div class="client-slide">
 						<div class="client-slide-cover">
-							<img src="assets/img/client-6.svg" alt="img">
+							<img src="{{asset('assets/img/client-6.svg')}}" alt="img">
 						</div>
 					</div>
 				</div>

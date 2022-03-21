@@ -3,6 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Creto - Shop</title>
+
+	<style>
+
+#pagination{
+  text-align: center;
+  padding: 10px;
+}
+#pagination a{
+  background: #2980b9;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding:5px 10px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+#pagination a.active{
+  background: #27ae60;
+}
+
+	</style>
 </head>
 
 <body id="home">
@@ -44,17 +65,19 @@
 							<p class="not-product">No products in the cart.</p>
 						</li>
 						<li class="widget wiget-shop-category">
-							<h5 class="title">bikes</h5>
+							<h5 class="title">Category</h5>
 							<ul>
 								<?php $i=1; ?>
-				@foreach($data['cetegory'] as $cetegory)
-								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></p></li>
-					@endforeach
+
+							@foreach($data['cetegory'] as $cetegory)
+								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->name}}"><span>{{$cetegory->name}}</span></p></li>
+							@endforeach
 							</ul>
 						</li>
 						<li class="widget wiget-brand">
 							<h5 class="title">brand</h5>
 							<ul>
+
 								<?php $i=1; ?>
 								@foreach($data['brand'] as $brand)
 								<li><p><input type="checkbox" id="brand{{$i++}}" onclick="cat_filter()" value="{{$brand->id}}"><span>{{$brand->name}}</span></p></li>
@@ -62,19 +85,27 @@
 								
 							</ul>
 						</li>
-						<li class="widget wiget-color">
+
+						<li class="widget wiget-price">
+							<h5 class="title">price</h5>
+							<div id="slider-range"></div>
+							<div class="amount-cover">
+								<input type="text" id="amount_min" oninput="cat_filter()">
+								<span>&mdash;</span>
+								<input type="text" id="amount_max" oninput="cat_filter()">
+							</div>
+						</li>
+						<!-- <li class="widget wiget-color">
 							<h5 class="title">color</h5>
 							<ul>
-								<li style="background: #f3deca"></li>
-								<li style="background: #fa9483"></li>
-								<li style="background: #2d4057"></li>
-								<li style="background: #4097aa"></li>
-								<li style="background: #0ac693"></li>
-								<li style="background: #0c5061"></li>
-								<li style="background: #f74440"></li>
-								<li style="background: #e0e44a"></li>
+								<?php $i=1; ?>
+								@foreach($data['colors'] as $color)
+								<li style="background: {{$color->name}}" value="{{$color->id}}" onclick="cat_filter(this.value)" id="color{{$i++}}"></li>
+								@if($i>8) @break
+								@endif
+								@endforeach
 							</ul>
-						</li>
+						</li> -->
 					</ul>
 					<a href="#" class="reset-filter-btn">Reset Filters</a>
 				</div>
@@ -97,21 +128,13 @@
 					
 					<h2 class="title">All Products</h2>
 					<div class="shop-sort-cover">
-						<div class="sort-left"> Result Found <b> {{count($data['product'])}} </b></div>
+						<div class="sort-left" > Result Found  <span id ="result_found"><b> {{count($data['product'])}} </b></span></div>
 						<div class="sort-right">
-							<div class="sort-by">
-								<span class="sort-name">sort by:</span>
-								<select class="nice-select">
-									<option selected="selected" disabled>best selling</option>
-									<option>new product</option>
-									<option>sale product</option>
-								</select>
-							</div>
 					
 						</div>
 					</div>
-					<div class="shop-product-cover">
-				<div class="row product-cover block"  id="data_elements">		
+					<div class="shop-product-cover" id="data_elements">
+				<div class="row product-cover block"  >		
 							@if(isset($data['product']))
 								@foreach($data['product'] as $product)
 							<div class="col-sm-6 col-lg-3">
@@ -139,17 +162,8 @@
 
 						</div>
 
-
 						<div class="pagination-cover">
-							<ul class="pagination">
-								<li class="pagination-item item-prev"><a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-								<li class="pagination-item active"><a href="#">1</a></li>
-								<li class="pagination-item"><a href="#">2</a></li>
-								<li class="pagination-item"><a href="#">3</a></li>
-								<li class="pagination-item"><a href="#">4</a></li>
-								<li class="pagination-item"><a href="#">5</a></li>
-								<li class="pagination-item item-next"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-							</ul>
+							{{ $data['product']->links('website.includes.pagination') }}
 						</div>
 					</div>
 				</div>
@@ -168,7 +182,7 @@
 
 <script>
 
-function cat_filter(){
+function cat_filter(page_no){
 	var cat_arr =[];
 if(document.getElementById('cat1')!= null){
 	if(document.getElementById('cat1').checked) {
@@ -268,8 +282,11 @@ if(document.getElementById('brand15')!= null){
 }}
 
 
-var color =[];
-       
+// price filter
+var amount_min=document.getElementById("amount_min").value;
+var amount_max = document.getElementById("amount_max").value;
+
+
 $.ajax({
 	url: 'all_filter_ajax',
 	type: 'post',
@@ -278,18 +295,34 @@ $.ajax({
 		" _token": '{{csrf_token()}}',
 		"cat":cat_arr,
 		"brand":brand,
-		"color":color
+		'amount_min':amount_min,
+		'amount_max':amount_max,
+		'page_no':page_no
 
 	},
 	success: function(result) {	
 	
-console.log(result);
+		console.log(result);
 	 $('#data_elements').html(result);
+	 var count ,count_data;
+	//  count = document.getElementById("result_found").value;
+	 var count = $("#result_found").value;
+	 count_data = "<b>"+count+"<b";
+	 $('#result_found').html(count_data);
 	
 	}
+	
 
 });
 }
+
+$(document).on("click","#pagination a",function(e) {
+      e.preventDefault();
+      var page_id = $(this).attr("id");
+      cat_filter(page_id);
+    })
+
+
 	</script>
 
 </body>

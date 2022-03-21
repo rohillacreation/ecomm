@@ -101,6 +101,8 @@ Route::get('shop', function () {
     $data['product'] = all_product_data();
     $data['cetegory'] = Category::all()->where('status', 'publish');
     $data['brand'] = Brand::all();
+    $data['colors'] = Color::all();
+
 
 
     return view('website.shop', compact('data'));
@@ -175,6 +177,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('admin')->group(function () {
 
         Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
+        // dashboard counts 
+        Route::get('get_all_counts', [CommanController::class, 'get_all_counts']);
         Route::post('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 
         //Staff routes
@@ -183,7 +187,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('staffDelete/{id?}', 'StaffController@del')->name('StaffDelete');
         Route::get('staffEdit/{id?}', 'StaffController@edit')->name('StaffDelete');
         Route::post('/staffupdate', 'StaffController@update')->name('StaffUpdate');
-
 
         //Attribute routes
 
