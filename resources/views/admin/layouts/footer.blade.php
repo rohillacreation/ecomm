@@ -24,6 +24,28 @@
         }
     </script>
 
+    	<script>
+		function wish(product_id) {
+
+			if (document.getElementById(product_id).style.color == "red") {
+				document.getElementById(product_id).style.color = "gray";
+				window.alert("Remove from Whishlist");
+			} else {
+				document.getElementById(product_id).style.color = "red";
+				window.alert("Added to Whishlist");
+			}
+			$.ajax({
+				url: '/addWishList/' + product_id,
+				type: 'get',
+				data: {
+					"product_id": product_id
+				},
+				success: function(result) {}
+
+			})
+		}
+	</script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
     <!-- JS FILES -->

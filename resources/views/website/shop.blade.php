@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Creto - Shop</title>
 
 	<style>
+		#pagination {
+			text-align: center;
+			padding: 10px;
+		}
 
-#pagination{
-  text-align: center;
-  padding: 10px;
-}
-#pagination a{
-  background: #2980b9;
-  color: #fff;
-  text-decoration: none;
-  display: inline-block;
-  padding:5px 10px;
-  margin-right: 5px;
-  border-radius: 3px;
-}
-#pagination a.active{
-  background: #27ae60;
-}
+		#pagination a {
+			background: #2980b9;
+			color: #fff;
+			text-decoration: none;
+			display: inline-block;
+			padding: 5px 10px;
+			margin-right: 5px;
+			border-radius: 3px;
+		}
 
+		#pagination a.active {
+			background: #27ae60;
+		}
 	</style>
 </head>
 
@@ -40,7 +41,7 @@
 
 
 	@include('website.includes.header')
-	
+
 	<!-- ================ HEADER-TITLE ================ -->
 	<section class="s-header-title">
 		<div class="container">
@@ -67,22 +68,26 @@
 						<li class="widget wiget-shop-category">
 							<h5 class="title">Category</h5>
 							<ul>
-								<?php $i=1; ?>
+								<?php $i = 1; ?>
 
-									@foreach($data['cetegory'] as $cetegory)
-								<li><p><input type="checkbox" onclick="cat_filter()" id ="cat{{$i++}}" value="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></p></li>
-							@endforeach
+								@foreach($data['cetegory'] as $cetegory)
+								<li>
+									<p><input type="checkbox" onclick="cat_filter()" id="cat{{$i++}}" value="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></p>
+								</li>
+								@endforeach
 							</ul>
 						</li>
 						<li class="widget wiget-brand">
 							<h5 class="title">brand</h5>
 							<ul>
 
-								<?php $i=1; ?>
+								<?php $i = 1; ?>
 								@foreach($data['brand'] as $brand)
-								<li><p><input type="checkbox" id="brand{{$i++}}" onclick="cat_filter()" value="{{$brand->id}}"><span>{{$brand->name}}</span></p></li>
+								<li>
+									<p><input type="checkbox" id="brand{{$i++}}" onclick="cat_filter()" value="{{$brand->id}}"><span>{{$brand->name}}</span></p>
+								</li>
 								@endforeach
-								
+
 							</ul>
 						</li>
 
@@ -98,7 +103,7 @@
 						<!-- <li class="widget wiget-color">
 							<h5 class="title">color</h5>
 							<ul>
-								<?php $i=1; ?>
+								<?php $i = 1; ?>
 								@foreach($data['colors'] as $color)
 								<li style="background: {{$color->name}}" value="{{$color->id}}" onclick="cat_filter(this.value)" id="color{{$i++}}"></li>
 								@if($i>8) @break
@@ -123,43 +128,43 @@
 							</div>
 						</div>
 					</div>
-					
-					
-					
+
+
+
 					<h2 class="title">All Products</h2>
 					<div class="shop-sort-cover">
-						<div class="sort-left" > Result Found  <span id ="result_found"><b> {{count($data['product'])}} </b></span></div>
+						<div class="sort-left"> Result Found <span id="result_found"><b> {{count($data['product'])}} </b></span></div>
 						<div class="sort-right">
-					
+
 						</div>
 					</div>
 					<div class="shop-product-cover" id="data_elements">
-				<div class="row product-cover block"  >		
+						<div class="row product-cover block">
 							@if(isset($data['product']))
-								@foreach($data['product'] as $product)
+							@foreach($data['product'] as $product)
 							<div class="col-sm-6 col-lg-3">
-									<div class="product-item">
-										<!-- <span class="top-sale">top sale</span> -->
-										<ul class="product-icon-top">
-											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-										</ul>
-										<a href="{{asset('uploads/gallery/'.$product->location)}}" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
-									
-	<div class="product-item-cover">
-											<div class="price-cover">
-												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i>  {{$product->price}} </div>
-												<!-- <div class="old-price">$1.799</div> -->
-											</div>
-											<h6 class="prod-title"><a href="asset('shopNow/'.$product->id)}}">{{$product->name}}</a></h6>
-														<a href="{{asset('shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
-										</div>
-									
-									</div>
-								</div>
-								@endforeach
+								<div class="product-item">
+									<!-- <span class="top-sale">top sale</span> -->
+									<ul class="product-icon-top">
+										<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
+										<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
+									</ul>
+									<a href="{{asset('uploads/gallery/'.$product->location)}}" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 
-								@endif
+									<div class="product-item-cover">
+										<div class="price-cover">
+											<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
+											<!-- <div class="old-price">$1.799</div> -->
+										</div>
+										<h6 class="prod-title"><a href="asset('shopNow/'.$product->id)}}">{{$product->name}}</a></h6>
+										<a href="{{asset('shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
+									</div>
+
+								</div>
+							</div>
+							@endforeach
+
+							@endif
 
 						</div>
 
@@ -168,8 +173,8 @@
 						</div>
 					</div>
 				</div>
-		
-		
+
+
 			</div>
 		</div>
 	</section>
@@ -181,150 +186,191 @@
 		<i class="fa fa-angle-double-up" aria-hidden="true"></i>
 	</a>
 
-<script>
+	<script>
+		function cat_filter(page_no) {
+			var cat_arr = [];
+			if (document.getElementById('cat1') != null) {
+				if (document.getElementById('cat1').checked) {
+					cat_arr.push(document.getElementById('cat1').value);
+				}
+			}
+			if (document.getElementById('cat2') != null) {
+				if (document.getElementById('cat2').checked) {
+					cat_arr.push(document.getElementById('cat2').value);
+				}
+			}
 
-function cat_filter(page_no){
-	var cat_arr =[];
-if(document.getElementById('cat1')!= null){
-	if(document.getElementById('cat1').checked) {
-	cat_arr.push(document.getElementById('cat1').value);
-}}
-if(document.getElementById('cat2')!= null){
-	if(document.getElementById('cat2').checked) {
-	cat_arr.push(document.getElementById('cat2').value);
-}}
+			if (document.getElementById('cat3') != null) {
+				if (document.getElementById('cat3').checked) {
+					cat_arr.push(document.getElementById('cat3').value);
+				}
+			}
 
-if(document.getElementById('cat3')!= null){
-	if(document.getElementById('cat3').checked) {
-	cat_arr.push(document.getElementById('cat3').value);
-}}
+			if (document.getElementById('cat4') != null) {
+				if (document.getElementById('cat4').checked) {
+					cat_arr.push(document.getElementById('cat4').value);
+				}
+			}
 
-if(document.getElementById('cat4')!= null){
-	if(document.getElementById('cat4').checked) {
-	cat_arr.push(document.getElementById('cat4').value);
-}}
+			if (document.getElementById('cat5') != null) {
+				if (document.getElementById('cat5').checked) {
+					cat_arr.push(document.getElementById('cat5').value);
+				}
+			}
+			if (document.getElementById('cat6') != null) {
+				if (document.getElementById('cat6').checked) {
+					cat_arr.push(document.getElementById('cat5').value);
+				}
+			}
 
-if(document.getElementById('cat5')!= null){
-	if(document.getElementById('cat5').checked) {
-	cat_arr.push(document.getElementById('cat5').value);
-}}
-if(document.getElementById('cat6')!= null){
-	if(document.getElementById('cat6').checked) {
-	cat_arr.push(document.getElementById('cat5').value);
-}}
+			if (document.getElementById('cat7') != null) {
+				if (document.getElementById('cat7').checked) {
+					cat_arr.push(document.getElementById('cat7').value);
+				}
+			}
 
-if(document.getElementById('cat7')!= null){
-	if(document.getElementById('cat7').checked) {
-	cat_arr.push(document.getElementById('cat7').value);
-}}
+			// brands
 
-// brands
-
-var brand=[];
-if(document.getElementById('brand1')!= null){
-	if(document.getElementById('brand1').checked) {
-		brand.push(document.getElementById('brand1').value);
-}}
-if(document.getElementById('brand2')!= null){
-	if(document.getElementById('brand2').checked) {
-		brand.push(document.getElementById('brand2').value);
-}}
-if(document.getElementById('brand3')!= null){
-	if(document.getElementById('brand3').checked) {
-		brand.push(document.getElementById('brand3').value);
-}}
-if(document.getElementById('brand4')!= null){
-	if(document.getElementById('brand4').checked) {
-		brand.push(document.getElementById('brand4').value);
-}}
-if(document.getElementById('brand5')!= null){
-	if(document.getElementById('brand5').checked) {
-		brand.push(document.getElementById('brand5').value);
-}}
-if(document.getElementById('brand6')!= null){
-	if(document.getElementById('brand6').checked) {
-		brand.push(document.getElementById('brand6').value);
-}}
-if(document.getElementById('brand7')!= null){
-	if(document.getElementById('brand7').checked) {
-		brand.push(document.getElementById('brand7').value);
-}}
-if(document.getElementById('brand8')!= null){
-	if(document.getElementById('brand8').checked) {
-		brand.push(document.getElementById('brand8').value);
-}}
-if(document.getElementById('brand9')!= null){
-	if(document.getElementById('brand9').checked) {
-		brand.push(document.getElementById('brand9').value);
-}}
-if(document.getElementById('brand10')!= null){
-	if(document.getElementById('brand7').checked) {
-		brand.push(document.getElementById('brand10').value);
-}}
-if(document.getElementById('brand11')!= null){
-	if(document.getElementById('brand11').checked) {
-		brand.push(document.getElementById('brand11').value);
-}}
-if(document.getElementById('brand12')!= null){
-	if(document.getElementById('brand12').checked) {
-		brand.push(document.getElementById('brand12').value);
-}}
-if(document.getElementById('brand13')!= null){
-	if(document.getElementById('brand13').checked) {
-		brand.push(document.getElementById('brand13').value);
-}}
-if(document.getElementById('brand14')!= null){
-	if(document.getElementById('brand14').checked) {
-		brand.push(document.getElementById('brand14').value);
-}}
-if(document.getElementById('brand15')!= null){
-	if(document.getElementById('brand15').checked) {
-		brand.push(document.getElementById('brand15').value);
-}}
-
-
-// price filter
-var amount_min=document.getElementById("amount_min").value;
-var amount_max = document.getElementById("amount_max").value;
-
-
-$.ajax({
-	url: 'all_filter_ajax',
-	type: 'post',
-	data: {
-
-		" _token": '{{csrf_token()}}',
-		"cat":cat_arr,
-		"brand":brand,
-		'amount_min':amount_min,
-		'amount_max':amount_max,
-		'page_no':page_no
-
-	},
-	success: function(result) {	
-	
-		console.log(result);
-	 $('#data_elements').html(result);
-	 var count ,count_data;
-	//  count = document.getElementById("result_found").value;
-	 var count = $("#result_found").value;
-	 count_data = "<b>"+count+"<b";
-	 $('#result_found').html(count_data);
-	
-	}
-	
-
-});
-}
-
-$(document).on("click","#pagination a",function(e) {
-      e.preventDefault();
-      var page_id = $(this).attr("id");
-      cat_filter(page_id);
-    })
+			var brand = [];
+			if (document.getElementById('brand1') != null) {
+				if (document.getElementById('brand1').checked) {
+					brand.push(document.getElementById('brand1').value);
+				}
+			}
+			if (document.getElementById('brand2') != null) {
+				if (document.getElementById('brand2').checked) {
+					brand.push(document.getElementById('brand2').value);
+				}
+			}
+			if (document.getElementById('brand3') != null) {
+				if (document.getElementById('brand3').checked) {
+					brand.push(document.getElementById('brand3').value);
+				}
+			}
+			if (document.getElementById('brand4') != null) {
+				if (document.getElementById('brand4').checked) {
+					brand.push(document.getElementById('brand4').value);
+				}
+			}
+			if (document.getElementById('brand5') != null) {
+				if (document.getElementById('brand5').checked) {
+					brand.push(document.getElementById('brand5').value);
+				}
+			}
+			if (document.getElementById('brand6') != null) {
+				if (document.getElementById('brand6').checked) {
+					brand.push(document.getElementById('brand6').value);
+				}
+			}
+			if (document.getElementById('brand7') != null) {
+				if (document.getElementById('brand7').checked) {
+					brand.push(document.getElementById('brand7').value);
+				}
+			}
+			if (document.getElementById('brand8') != null) {
+				if (document.getElementById('brand8').checked) {
+					brand.push(document.getElementById('brand8').value);
+				}
+			}
+			if (document.getElementById('brand9') != null) {
+				if (document.getElementById('brand9').checked) {
+					brand.push(document.getElementById('brand9').value);
+				}
+			}
+			if (document.getElementById('brand10') != null) {
+				if (document.getElementById('brand7').checked) {
+					brand.push(document.getElementById('brand10').value);
+				}
+			}
+			if (document.getElementById('brand11') != null) {
+				if (document.getElementById('brand11').checked) {
+					brand.push(document.getElementById('brand11').value);
+				}
+			}
+			if (document.getElementById('brand12') != null) {
+				if (document.getElementById('brand12').checked) {
+					brand.push(document.getElementById('brand12').value);
+				}
+			}
+			if (document.getElementById('brand13') != null) {
+				if (document.getElementById('brand13').checked) {
+					brand.push(document.getElementById('brand13').value);
+				}
+			}
+			if (document.getElementById('brand14') != null) {
+				if (document.getElementById('brand14').checked) {
+					brand.push(document.getElementById('brand14').value);
+				}
+			}
+			if (document.getElementById('brand15') != null) {
+				if (document.getElementById('brand15').checked) {
+					brand.push(document.getElementById('brand15').value);
+				}
+			}
 
 
+			// price filter
+			var amount_min = document.getElementById("amount_min").value;
+			var amount_max = document.getElementById("amount_max").value;
+
+
+			$.ajax({
+				url: 'all_filter_ajax',
+				type: 'post',
+				data: {
+
+					" _token": '{{csrf_token()}}',
+					"cat": cat_arr,
+					"brand": brand,
+					'amount_min': amount_min,
+					'amount_max': amount_max,
+					'page_no': page_no
+
+				},
+				success: function(result) {
+
+					console.log(result);
+					$('#data_elements').html(result);
+					var count, count_data;
+					//  count = document.getElementById("result_found").value;
+					var count = $("#result_found").value;
+					count_data = "<b>" + count + "<b";
+					$('#result_found').html(count_data);
+
+				}
+
+
+			});
+
+			$.ajax({
+				url: '/getWhishList/',
+				type: 'get',
+				data: {},
+				success: function(result) {
+					result.forEach(myFunction);
+
+					function myFunction(item) {
+						if (document.getElementById(item) != null) {
+							document.getElementById(item).style.color = "red";
+						}
+					}
+
+				}
+			})
+
+		}
+		</script>
+		<script>
+
+		$(document).on("click", "#pagination a", function(e) {
+			e.preventDefault();
+			var page_id = $(this).attr("id");
+			cat_filter(page_id);
+		})
 	</script>
 
+
+
 </body>
+
 </html>

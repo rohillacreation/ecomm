@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Creto - Shop</title>
@@ -46,7 +47,7 @@
 				<div class="col-12 col-md-5">
 					<!--===== SLIDER-SINGLE-FOR =====-->
 					<div class="slider-single-for">
-						@foreach($data['images'] as  $image)
+						@foreach($data['images'] as $image)
 						<div class="slide-single-for">
 							<a href="{{asset('uploads/gallery/'.$image->location)}}" class="single-for-img" data-fancybox="prod1">
 								<img src="{{asset('uploads/gallery/'.$image->location)}}" alt="img">
@@ -57,7 +58,7 @@
 					<!--=== SLIDER-SINGLE-FOR END ===-->
 					<!--===== SLIDER-SINGLE-NAV =====-->
 					<div class="slider-single-nav">
-					@foreach($data['images'] as  $image)
+						@foreach($data['images'] as $image)
 						<div class="slide-single-nav">
 							<div class="single-nav-img">
 								<img src="{{asset('uploads/gallery/'.$image->location)}}" alt="img">
@@ -71,9 +72,9 @@
 					<h2 class="title">{{$product->name}}</h2>
 					<div class="single-price">
 						<div class="new-price">{{$product->price}}</div>
-					
+
 					</div>
-				
+
 					<div class="frame-size">
 						<label>Color</label>
 						<ul>
@@ -231,25 +232,27 @@
 		<div class="container">
 			<h2 class="title">Related Products</h2>
 			<div class="row product-cover">
-			
-		
-			@if(isset($data['suggested_product']))
-			@foreach($data['suggested_product'] as $product)
+
+
+				@if(isset($data['suggested_product']))
+				@foreach($data['suggested_product'] as $product)
 				<div class="col-sm-6 col-lg-3">
 					<div class="product-item">
 						<!-- <span class="sale">11%</span> -->
 						<ul class="product-icon-top">
 							<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+							<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
+
 						</ul>
 						<a href="{{asset('uploads/gallery/'.$product->location)}}" class="product-img"><img src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 						<div class="product-item-cover">
 							<div class="price-cover">
-							<i class="fa fa-rupee" style="font-size:24px; padding:10px"></i>	<div class="new-price">{{$product->price}}</div>
+								<i class="fa fa-rupee" style="font-size:24px; padding:10px"></i>
+								<div class="new-price">{{$product->price}}</div>
 								<!-- <div class="old-price">$1.799</div> -->
 							</div>
-							<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
-							<a href="single-shop.html" class="btn"><span>buy now</span></a>
+							<h6 class="prod-title"><a href="{{asset('shopNow/'.$product->id)}}">{{$product->name}}</a></h6>
+							<a href="{{asset('shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 						</div>
 						<!-- <div class="prod-info">
 							<ul class="prod-list">
@@ -264,13 +267,13 @@
 				</div>
 				@endforeach
 
-@endif
+				@endif
 
 			</div>
 		</div>
 	</section>
 	<!--============= RELATED PRODUCTS END =============-->
-@include('website.includes.footer')
+	@include('website.includes.footer')
 	<!--===================== TO TOP =====================-->
 	<a class="to-top" href="#home">
 		<i class="fa fa-angle-double-up" aria-hidden="true"></i>
@@ -283,11 +286,14 @@
 	<div class="popup popup-action1 popup-wideo">
 		<div class="popup-close close_vid"></div>
 		<div class="popup-video">
-			<iframe src="{{asset('uploads/gallery/'.$product->video)}}" allowfullscreen  id="video-modal"></iframe>
+			<iframe src="{{asset('uploads/gallery/'.$product->video)}}" allowfullscreen id="video-modal"></iframe>
 		</div>
 	</div>
 	<!--================ POPUP VIDEO END ================-->
 	<!--=================== SCRIPT	===================-->
+
+
+
 	<script src="{{asset('assets/js/jquery-2.2.4.min.js')}}"></script>
 	<script src="{{asset('assets/js/slick.min.js')}}"></script>
 	<script src="{{asset('assets/js/jquery-ui.js')}}"></script>
@@ -295,4 +301,5 @@
 	<script src="{{asset('assets/js/jquery.fancybox.js')}}"></script>
 	<script src="{{asset('assets/js/scripts.js')}}"></script>
 </body>
+
 </html>

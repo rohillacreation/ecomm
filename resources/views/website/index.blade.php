@@ -35,7 +35,7 @@
 				<li><a href="https://www.instagram.com/rovadex/">instagram</a></li>
 			</ul>
 			<div class="main-slider">
-			<?php $i=0; ?>
+				<?php $i = 0; ?>
 				@foreach($data['product'] as $product)
 
 				@if($i++>9) @break
@@ -72,7 +72,7 @@
 
 
 
-		
+
 		<!--================ S-FIND-BIKE ================-->
 		<section class="s-find-bike">
 			<div class="container">
@@ -84,26 +84,26 @@
 
 							<label>Type</label>
 							<select class="nice-select id" id="type_select" onchange="type_ajex(this.value)" name="type">
-								
-							@foreach($data['cetegory'] as $cetegory)
+
+								@foreach($data['cetegory'] as $cetegory)
 								<option selected="selected" value="{{$cetegory->id}}">{{$cetegory->name}}</option>
 								@endforeach
 							</select>
 						</li>
 						<li>
-							<label >brand</label>
-						
-							<input type="text" name="brand" list="brand_select"  onchange="brand_ajex(this.value)" placeholder="All">
-							<datalist class="" id="brand_select" name ="brand">
-							<option class = "nice-select" value="None">All</option>
-						
+							<label>brand</label>
+
+							<input type="text" name="brand" list="brand_select" onchange="brand_ajex(this.value)" placeholder="All">
+							<datalist class="" id="brand_select" name="brand">
+								<option class="nice-select" value="None">All</option>
+
 							</datalist>
-				
+
 						</li>
 						<li>
 							<label>color</label>
-							<select  class="slect_size id" id="color_select" name ="color">
-							<option class = "nice-select" value="None">All</option>
+							<select class="slect_size id" id="color_select" name="color">
+								<option class="nice-select" value="None">All</option>
 
 							</select>
 						</li>
@@ -127,8 +127,9 @@
 								<h4 class="title">{{$cetegory['name']}}</h4>
 								<form action="{{asset('shop/'.$cetegory->id)}}" method="post">
 									@csrf
-								<button href="" class="btn"><span>view more</span></button>
-							</form>							</div>
+									<button href="" class="btn"><span>view more</span></button>
+								</form>
+							</div>
 						</div>
 					</div>
 
@@ -175,26 +176,26 @@
 						<h2 class="title">our products</h2>
 						<ul class="tab-nav product-tabs">
 							<li class="item" rel="tab_all"><span>All</span></li>
-							<li class="item" rel="tab{{$data['cetegory'][0]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][0]->id}}"><span>{{$data['cetegory'][0]->name}}</span></li>
-							<li class="item" rel="tab{{$data['cetegory'][1]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][1]->id}}"><span>{{$data['cetegory'][1]->name}}</span></li>
-							<li class="item" rel="tab{{$data['cetegory'][2]->id}}" onclick="second_cat(this.id)" id="{{$data['cetegory'][2]->id}}"><span>{{$data['cetegory'][2]->name}}</span></li>
+							@foreach($data['cetegory'] as $cetegory)
+							<li class="item" rel="tab{{$cetegory->id}}" onclick="second_cat(this.id)" id="{{$cetegory->id}}"><span>{{$cetegory->name}}</span></li>
+							@endforeach
 						</ul>
 					</div>
 
 					<div class="tabs-content">
 
 
-					<div class="tab tab_all">
+						<div class="tab tab_all">
 							<div class="row product-cover">
 
 
-							@foreach($data['product'] as $product)
+								@foreach($data['product'] as $product)
 								<div class="col-sm-6 col-lg-3">
 									<div class="product-item">
 										<!-- <span class="top-sale">top sale</span> -->
 										<ul class="product-icon-top">
 											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+											<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
 										</ul>
 										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 										<div class="product-item-cover">
@@ -205,33 +206,32 @@
 											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
 											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 										</div>
-									
+
 									</div>
 								</div>
+
 								@endforeach
+							
+
+							</div>
+							<p>
 								{{ $data['product']->links('website.includes.pagination') }}
-
-								<div class="row product-cover">
-		
-								</div>
-
-							</div>
-									</div>
+								</p>
+						</div>
+						<?php $i = 1; ?>
 
 
-
-
-
-						<div class="tab tab{{$data['cetegory'][0]->id}}">
+						@foreach($data['data_by_category'] as $cetegory_all_data)
+						<div class="tab tab{{$i++}}">
 							<div class="row product-cover">
 
-							@foreach($data['data_by_category'][0] as $product)
+								@foreach($cetegory_all_data as $product)
 								<div class="col-sm-6 col-lg-3">
 									<div class="product-item">
 										<!-- <span class="top-sale">top sale</span> -->
 										<ul class="product-icon-top">
 											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+											<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
 										</ul>
 										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 										<div class="product-item-cover">
@@ -242,64 +242,14 @@
 											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
 											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
 										</div>
-									
+
 									</div>
 								</div>
 								@endforeach
 							</div>
 						</div>
-
-						<div class="tab tab{{$data['cetegory'][1]->id}}">
-							<div class="row product-cover">
-
-							@foreach($data['data_by_category'][1] as $product)
-								<div class="col-sm-6 col-lg-3">
-									<div class="product-item">
-										<!-- <span class="top-sale">top sale</span> -->
-										<ul class="product-icon-top">
-											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-										</ul>
-										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
-										<div class="product-item-cover">
-											<div class="price-cover">
-												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
-												<!-- <div class="old-price">$1.799</div> -->
-											</div>
-											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
-											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
-										</div>
-									</div>
-								</div>
-								@endforeach
-							</div>
-						</div>
-
-						<div class="tab tab{{$data['cetegory'][2]->id}}">
-							<div class="row product-cover">
-
-							@foreach($data['data_by_category'][2] as $product)
-								<div class="col-sm-6 col-lg-3">
-									<div class="product-item">
-										<!-- <span class="top-sale">top sale</span> -->
-										<ul class="product-icon-top">
-											<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-										</ul>
-										<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
-										<div class="product-item-cover">
-											<div class="price-cover">
-												<div class="new-price"><i class="fa fa-inr" aria-hidden="true"> </i> {{$product->price}} </div>
-												<!-- <div class="old-price">$1.799</div> -->
-											</div>
-											<h6 class="prod-title"><a href="single-shop.html">{{$product->name}}</a></h6>
-											<a href="{{asset('/shopNow/'.$product->id)}}" class="btn"><span>buy now</span></a>
-										</div>
-									</div>
-								</div>
-								@endforeach
-							</div>
-						</div>
+						@endforeach
+						<!--  -->
 
 
 
@@ -340,7 +290,7 @@
 							<!-- <span class="top-sale">top sale</span> -->
 							<ul class="product-icon-top">
 								<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+								<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
 							</ul>
 							<a href="single-shop.html" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 							<div class="product-item-cover">
@@ -355,11 +305,11 @@
 						</div>
 					</div>
 					@endforeach
-					{{ $data['product']->links('website.includes.pagination') }}
-
-
 
 				</div>
+				<p>
+								{{ $data['product']->links('website.includes.pagination') }}
+								</p>
 			</div>
 		</section>
 		<!--================ S-FEEDBACK END ================-->
@@ -543,47 +493,45 @@
 		<!--=================== TO TOP END ===================-->
 		<!--==================== SCRIPT	====================-->
 		<script>
-function type_ajex(cat_id){          
-$.ajax({
-	url: 'brand_ajax',
-	type: 'post',
-	data: {
+			function type_ajex(cat_id) {
+				$.ajax({
+					url: 'brand_ajax',
+					type: 'post',
+					data: {
 
-		" _token": '{{csrf_token()}}',
-		"id":cat_id
+						" _token": '{{csrf_token()}}',
+						"id": cat_id
 
-	},
-	success: function(result) {	
-	 $('#brand_select').html(result);
-	
-	}
+					},
+					success: function(result) {
+						$('#brand_select').html(result);
 
-})}
-// catagory ajax
+					}
 
-function brand_ajex(brand_id){     
+				})
+			}
+			// catagory ajax
 
-$.ajax({
-	url: 'color_ajax',
-	type: 'post',
-	data: {
+			function brand_ajex(brand_id) {
 
-		" _token": '{{csrf_token()}}',
-		"id":brand_id
+				$.ajax({
+					url: 'color_ajax',
+					type: 'post',
+					data: {
 
-	},
-	success: function(result) {	
-		//window.alert(result);
-			 $('#color_select').html(result);
-	
-	}
+						" _token": '{{csrf_token()}}',
+						"id": brand_id
 
-})
-		}
+					},
+					success: function(result) {
+						//window.alert(result);
+						$('#color_select').html(result);
 
+					}
 
-
-			</script>
+				})
+			}
+		</script>
 
 </body>
 

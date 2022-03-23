@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\commanController;
 use App\Http\Controllers\Live_searchController;
+use App\Http\Controllers\WishlistController;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
@@ -78,10 +79,8 @@ Route::get('website', function () {
         array_push($data_by_category, all_product_data($category->id));
     }
     $data['data_by_category'] = $data_by_category;
-
     //colors
     $data['color'] = Color::all();
-
     return view('website.index', compact('data'));
 });
 
@@ -102,9 +101,6 @@ Route::get('shop', function () {
     $data['cetegory'] = Category::all()->where('status', 'publish');
     $data['brand'] = Brand::all();
     $data['colors'] = Color::all();
-
-
-
     return view('website.shop', compact('data'));
 });
 
@@ -117,8 +113,6 @@ Route::get('contact', function () {
     $data['product'] = all_product_data();
     return view('website.contacts', compact('data'));
 });
-
-
 
 Route::get('gallery', function () {
     $data['product'] = all_product_data();
@@ -144,7 +138,7 @@ Route::get('shopNow/{id}', function ($id) {
 Route::post('brand_ajax', [commanController::class, 'brand_ajax']);
 Route::post('color_ajax', [commanController::class, 'color_ajax']);
 Route::post('all_filter_ajax', [commanController::class, 'all_filter_ajax']);
-Route::post('shop/all_filter_ajax', [commanController::class, 'all_filter_ajax'])->name('all_filter_ajax');;
+Route::post('shop/all_filter_ajax', [commanController::class, 'all_filter_ajax']);
 
 
 // home search
@@ -164,6 +158,12 @@ Route::get('category/{id}', [Live_searchController::class, 'category'])->name('c
 Route::get('brand/{id}', [Live_searchController::class, 'brand'])->name('brand');
 Route::get('/product/{id}', [Live_searchController::class, 'products'])->name('products');
 Route::post('/variant_change', [Live_searchController::class, 'variant_change'])->name('variant_change');
+
+Route::get('/addWishList/{product_id}' ,[WishlistController::class, 'create']);
+Route::get('/getWhishList' ,[WishlistController::class, 'index']);
+
+
+
 
 
 //Test route
@@ -278,4 +278,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('blogEdit/{id}', [BlogController::class, 'edit']);
         Route::post('blogUpdate', [BlogController::class, 'update'])->name('update_blog');
     });
+
+        // wish list routs
+
 });
