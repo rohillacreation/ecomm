@@ -10,6 +10,8 @@ use App\Models\Color;
 use App\Models\Variations;
 use Modules\Order\Entities\Order;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -228,6 +230,60 @@ class commanController extends Controller
     public function get_all_counts()
     {
         $data = [];
+        $role= Auth::guard('admin')->user()->role;
+        $seller_id = Auth::guard('admin')->user()->id;
+
+        if($role == 'Seller' || $role == 'seller'){
+        $data['total_product'] = Product::where('seller_id' , $seller_id)->count();
+        $data['published_product'] = Product::where('seller_id' , $seller_id)->where('status', 'published')->count();
+        $data['unpublished_product'] = Product::where('seller_id' , $seller_id)->where('status', 'unpublished')->count();
+        // product count by category
+        $categories = Category::where('seller_id' , $seller_id)->pluck('name', 'id');
+        foreach ($categories as $key => $categry) {
+            $data['category_product'][$categry] = Product::where('seller_id' , $seller_id)->where('cat_id', $key)->count();
+        }
+        // orders data
+        $data['created_orders'] = Order::where('status', 'created')->count();
+        $data['paid_orders'] = Order::where('status', 'paid')->count();
+        // top orders data
+        $product_ids =Product::where('seller_id' , $seller_id)->where('status', 'published')->pluck('id' , 'id');
+        $final_date = Carbon::now('UTC')->addDay(-30)->format('Y-m-d H:i:s');
+    
+        $numbers = DB::table('orderdetails')->where('created_at' , '>=' , $final_date)
+        ->whereIn('product_id', $product_ids)->pluck('product_id');
+        $arr_count = count($numbers);
+        // $numbers = array_column($top_orders, 'product_id');
+        $new_arr = [];
+
+        for ($i = 0; $i < $arr_count; $i++) {
+            $new_arr[$numbers[$i]] = 1;
+        }
+
+        for ($j = 0; $j < $arr_count; $j++) {
+            $count = 0;
+            for ($k = 0; $k < $arr_count; $k++) {
+                if ($numbers[$j] == $numbers[$k]) $count++;
+            }
+            $new_arr[$numbers[$j]] = $count;
+        }
+
+        arsort($new_arr);
+        $my_cat_ids = [];
+        
+        foreach ($new_arr as $key => $value) {
+            Array_push($my_cat_ids , $key);
+        }
+        $categories = Product::whereIn('id' , $my_cat_ids)->pluck('cat_id', 'id');
+        $category_name =  Category::pluck('name'  ,'id');
+       
+        foreach ($new_arr as $key => $value) {
+            if (isset($categories[$key])) {
+            $data['top_category'][$category_name[$categories[$key]]] = $value;
+            }
+        
+        }
+        }
+        else{
         $data['total_product'] = Product::all()->count();
         $data['published_product'] = Product::where('status', 'published')->count();
         $data['unpublished_product'] = Product::where('status', 'unpublished')->count();
@@ -270,9 +326,9 @@ class commanController extends Controller
             }
             $end++;
 
-            if ($end > 3) break;
+            // if ($end > 3) break;
         }
-
+    }
 
         return $data;
     }

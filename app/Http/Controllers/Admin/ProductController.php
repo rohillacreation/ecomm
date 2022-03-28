@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\tag;
 use App\Models\Meta;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Image_table;
 
 
@@ -21,13 +23,24 @@ class ProductController extends Controller
 {
     public function List_product()
     {
-
-        $product = Product::with('variant')
+        if(Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller' ){
+            $seller_id = Auth::guard('admin')->user()->id;
+            $product = Product::with('variant')
+            ->where('seller_id' , $seller_id)
             ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
             ->where('use_type', 'Main_product_image')
             ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
             ->select('products.*', 'galleries.location')
             ->paginate();
+    }
+        else{
+            $product = Product::with('variant')
+            ->join('image_tables', 'products.id', '=', 'image_tables.use_id')
+            ->where('use_type', 'Main_product_image')
+            ->join('galleries', 'image_tables.image_id', '=', 'galleries.id')
+            ->select('products.*', 'galleries.location')
+            ->paginate();
+    }
 
         return view('admin.oprations.products.All_Product', [
             'products' => $product
@@ -40,7 +53,7 @@ class ProductController extends Controller
         $brand = brand::all();
         $color = color::all();
         $attribute = attribute::all();
-        $images = Gallery::paginate(1);
+        $images = Gallery::paginate(5);
         return view('admin.oprations.products.AddProduct', [
             'categories' => $category,
             'brands' => $brand,
@@ -133,13 +146,18 @@ class ProductController extends Controller
             'ProductPdf' => 'mimes:pdf',
         ]);
 
+         if(Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller' )
+        $seller_id = Auth::guard('admin')->user()->id;
+        else $seller_id = 0;
+       
         $data = new Product;
-
         $data->name = $request->name;
         $data->cat_id = $request->cat_id;
         $data->price = $request->unit_price;
         $data->description = $request->description;
         $data->quantity = $request->quantity;
+        $data->seller_id = $seller_id;
+
        
         $brand_id = $request->brand_id;
 

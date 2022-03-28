@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\Admin\CkeditorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
@@ -69,17 +71,13 @@ function Gallery_images($product_id)
 
 
 Route::get('website', function () {
-    // product data
     $data['product'] = all_product_data();
-    // category data
     $data['cetegory'] = Category::all()->where('status', 'publish');
-    // data by category
     $data_by_category = [];
     foreach ($data['cetegory'] as $key => $category) {
         array_push($data_by_category, all_product_data($category->id));
     }
     $data['data_by_category'] = $data_by_category;
-    //colors
     $data['color'] = Color::all();
     return view('website.index', compact('data'));
 });
@@ -181,7 +179,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
         // dashboard counts 
         Route::get('get_all_counts', [CommanController::class, 'get_all_counts']);
-        Route::post('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
+        Route::get('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 
         //Staff routes
         Route::get('staff', 'StaffController@index')->name('staff');
@@ -266,7 +264,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('product/get_pro_img', 'ProductController@product_img');
         Route::post('product/getVariant', 'ProductController@variant')->name('getVariant');
 
-
+        // orders
+        Route::get('orders_list', function () {
+            $data['orders'] = DB::table("orders");
+            return view('admin.oprations.order.index', compact('data'));
+        });
 
         // Products Blog
 

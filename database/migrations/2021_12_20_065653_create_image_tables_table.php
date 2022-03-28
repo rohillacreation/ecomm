@@ -19,6 +19,7 @@ class CreateImageTablesTable extends Migration
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('galleries')->onDelete('cascade');
             $table->integer('use_id')->unsigned();
+            $table->bigInteger('seller_id')->default('0');
             $table->string('use_type');
             $table->string('url')->nullable();
         });

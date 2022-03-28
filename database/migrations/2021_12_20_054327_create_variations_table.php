@@ -21,6 +21,7 @@ class CreateVariationsTable extends Migration
             $table->string('sku')->nullable();
             $table->integer('quantity');
             $table->bigInteger('product_id')->unsigned()->nullable();
+            $table->bigInteger('seller_id')->default('0');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('galleries')->onDelete('cascade');

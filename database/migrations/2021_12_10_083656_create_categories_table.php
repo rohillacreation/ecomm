@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('main_id');
+            $table->bigInteger('seller_id')->default('0');
             $table->string('status');
             $table->timestamps();
         });

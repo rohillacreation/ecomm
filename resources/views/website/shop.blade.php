@@ -147,7 +147,7 @@
 									<!-- <span class="top-sale">top sale</span> -->
 									<ul class="product-icon-top">
 										<li><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>
-										<li><i class="fa fa-heart" aria-hidden="true" id="{{$product->id}}" onclick="wish(this.id)"></i></li>
+										<li><i class="heart{{$product->id}} fa fa-heart" aria-hidden="true" id="{{$product->id}}"  onclick="wish(this.id)"></i></li>
 									</ul>
 									<a href="{{asset('uploads/gallery/'.$product->location)}}" class="product-img"><img class="lazy" src="{{asset('uploads/gallery/'.$product->location)}}" alt="product"></a>
 

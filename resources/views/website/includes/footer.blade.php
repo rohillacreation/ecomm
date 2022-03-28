@@ -85,8 +85,9 @@
 			result.forEach(myFunction);
 
 			function myFunction(item) {
-				if (document.getElementById(item) != null) {
-					document.getElementById(item).style.color = "red";
+				if (document.getElementsByName('heart'+item) != null) {
+					 $location = document.getElementsByClassName('heart'+item);
+					 $location[0].style.color = "red";
 				}
 			}
 

@@ -13,7 +13,6 @@
               },
               success: function(result) {	
         
-
             var a,b,c,o1,o2,o3;
             a = result['total_product'];
             b = result['published_product'];
@@ -38,7 +37,7 @@
                   {
                     data: [a, b, c],
 
-                    backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff"],
+                    backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff" , "#FFFF00","#e9ec1c" , "#df832e" , "#95968b" , "#f30f22", "#e77680" , "#c07c16" ,"#000000" , "#00FFFb" , "FFFFFF" ],
 
                     borderColor: [
                       "rgba(255, 99, 132, 1)",
@@ -87,7 +86,7 @@
                     datasets: [
                       {
                         data,
-                        backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff"],
+                        backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff" , "#FFFF00","#e9ec1c" , "#df832e" , "#95968b" , "#f30f22", "#e77680" , "#c07c16" ,"#000000" , "#00FFFb" , "FFFFFF" ],
 
                         borderColor: [
                           "rgba(255, 99, 132, 1)",
@@ -126,7 +125,7 @@
      datasets: [
        {
          data: [o1, o2,  o3 , 0],
-         backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff"],
+         backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff" , "#FFFF00","#e9ec1c" , "#df832e" , "#95968b" , "#f30f22", "#e77680" , "#c07c16" ,"#000000" , "#00FFFb" , "FFFFFF" ],
          borderColor: [
            "rgba(255, 99, 132, 1)",
            "rgba(54, 162, 235, 1)",
@@ -167,7 +166,7 @@
                       {
                         data,
 
-                        backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff"],
+                        backgroundColor: ["#fd3995", "#34bfa3", "#5d78ff" , "#FFFF00","#e9ec1c" , "#df832e" , "#95968b" , "#f30f22", "#e77680" , "#c07c16" ,"#000000" , "#00FFFb" , "FFFFFF" ],
 
                         borderColor: [
                           "rgba(255, 99, 132, 1)",
@@ -243,6 +242,7 @@
  
  }
  labels = arr4;
+
  var ctx4 = document.getElementById("myChart4").getContext("2d");
  var myChart4 = new Chart(ctx4, {
    // Type of Chart - bar, line, pie, doughnut, radar, polarArea

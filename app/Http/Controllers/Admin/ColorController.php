@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Color;
 
 class ColorController extends Controller
 {
     public function index()
     {
-        $data = color::paginate(5);
-
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+            $seller_id = Auth::guard('admin')->user()->id;
+            $data = color::where('seller_id' , $seller_id)->paginate(5);
+        }
+        else{
+            $data = color::paginate(5);
+        }
         return view('admin.oprations.colors.color', ['members' => $data]);
     }
     public function store(Request $request)
@@ -21,9 +27,13 @@ class ColorController extends Controller
         ]);
 
         $data = new color;
-
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+            $seller_id = Auth::guard('admin')->user()->id;}
+        else{
+                $seller_id = 0;
+        }
         $data->name = $request->input('name');
-
+        $data->seller_id = $seller_id;
         $done = $data->save();
 
         if ($done) {

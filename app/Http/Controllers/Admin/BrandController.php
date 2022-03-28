@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
@@ -11,8 +13,16 @@ class BrandController extends Controller
 {
     public function index()
     {
+
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+        $seller_id = Auth::guard('admin')->user()->id;
+        $data = brand::where('seller_id' ,   $seller_id)->paginate(10);
+
+    }
+    else{
         $data = brand::paginate(10);
-        // $categories = Category::all()->pluck('name','id');
+
+    }
         return view('admin.oprations.brands.brand', ['members' => $data]);
     }
 
@@ -22,10 +32,18 @@ class BrandController extends Controller
             'name' => 'required',
         ]);
 
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+            $seller_id = Auth::guard('admin')->user()->id;
+        }
+        else {
+            $seller_id = 0;
+        }
        
         $data = new brand;
 
         $data->name = $request->input('name');
+        $data->seller_id = $seller_id;
+
 
         $done = $data->save();
 

@@ -17,6 +17,7 @@ class CreateAttributeValuesTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('attributes_id')->unsigned();
+            $table->bigInteger('seller_id')->default('0');
             $table->foreign('attributes_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->timestamps();
         });

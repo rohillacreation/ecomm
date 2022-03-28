@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
 
     public function index()
     {
-        $data = Category::paginate(5);
 
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller') {
+            $seller_id = Auth::guard('admin')->user()->id;
+            $data = Category::where('seller_id' , $seller_id)->paginate(5);
+        } else {
+            $data = Category::paginate(5);
+        }
         return view('admin.oprations.categories.category', ['members' => $data]);
     }
     public function create()
@@ -28,11 +35,16 @@ class CategoryController extends Controller
             'status' => 'required',
         ]);
 
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller') 
+            $seller_id = Auth::guard('admin')->user()->id;
+            else  $seller_id ='0';
         $data = new category;
 
         $data->name = $request->input('name');
         $data->main_id = $request->input('main_id');
         $data->status = $request->input('status');
+        $data->seller_id = $seller_id;
+
 
         $done = $data->save();
 

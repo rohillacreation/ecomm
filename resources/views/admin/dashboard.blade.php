@@ -106,7 +106,6 @@
                                             <div class="canvas-circle {{$data['canvas_color'][$i++]}}"></div>
                                             <div>{{$canvas['name']}}</div>
                                         </div>
-                                        <?php if($i>5) $i=0; ?>
                                        @endforeach
                                     </div>
                                 </div>
@@ -125,7 +124,7 @@
                     </div>
                     <div class="col-lg-6 col-12 mt-4">
                         <div class="myChart4">
-                            <h4 class="text-center">Number of stock</h4>
+                            <h4 class="text-center">Top Selling product</h4>
                         <canvas id="myChart4" aria-label="chart" role="img"></canvas>
                         </div>
                     </div>

@@ -177,14 +177,14 @@
                             <div class="form-group row mb-3">
 
                                 <input type="text" class="form-control col-sm-3 col-form-label" value="Colors" disabled="">
-                            
+                                
                                 <div class="col-sm-7">
 
                                     <select name="color[]" id="color" class="form-control select2" multiple>
 
                                         @foreach($colors as $color)
 
-                                            <option value="{{$color->id}}">{{$color->name}}</option>
+                                            <option value="{{$color->name}}">{{$color->name}}</option>
 
                                         @endforeach
 

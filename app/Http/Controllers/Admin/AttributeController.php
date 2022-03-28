@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Attribute;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -12,8 +14,15 @@ class AttributeController extends Controller
 {
     public function index()
     {
-        $data = attribute::with('attribute_value')
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+            $seller_id = Auth::guard('admin')->user()->id;
+             $data = attribute::where('seller_id' , $seller_id)->with('attribute_value')
             ->paginate(5);
+        }
+        else{
+            $data = attribute::with('attribute_value')
+            ->paginate(5);
+        }
 
         return view('admin.oprations.attributes.attribute', ['members' => $data]);
     }
@@ -24,9 +33,17 @@ class AttributeController extends Controller
             'name' => 'required',
         ]);
 
-        $data = new attribute;
+        if (Auth::guard('admin')->user()->role == 'seller' || Auth::guard('admin')->user()->role == 'Seller'){
+            $seller_id = Auth::guard('admin')->user()->id;
+        }
+        else {
+            $seller_id = 0;
+        }
 
+        $data = new attribute;
         $data->name = $request->input('name');
+        $data->seller_id = $seller_id;
+
 
         $done = $data->save();
 
