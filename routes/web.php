@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\commanController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Live_searchController;
 use App\Http\Controllers\WishlistController;
 use App\Models\Brand;
@@ -20,10 +21,7 @@ use App\Models\Category;
 use App\Models\Image_table;
 use App\Models\Variations;
 use App\Models\Color;
-
-
-
-
+use App\Models\User;
 use Modules\Blog\Http\Controllers\BlogController;
 
 use Modules\BuyNow\Http\Controllers\BuyNowController;
@@ -181,8 +179,33 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('get_all_counts', [CommanController::class, 'get_all_counts']);
         Route::get('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 
+
+
+    //custumers route
+        Route::get('all_costumers', function () {
+            $data=User::paginate(12);
+            return view('admin.oprations.costumers.all_costumers' , compact('data'));
+        });
+        Route::get('add_costumers', function () {
+            return view('admin.oprations.costumers.add_costumer');
+        });
+        Route::post('add_costumer', [CustomerController::class, 'create']);
+        Route::get('customer/delete/{id}', [CustomerController::class, 'destroy']);
+        Route::get('customer/edit/{id}', [CustomerController::class, 'edit']);
+        Route::post('customer/update/{id}', [CustomerController::class, 'update']);
+
+
+
+
+
+
         //Staff routes
         Route::get('staff', 'StaffController@index')->name('staff');
+        Route::get('staff_add', function () {
+            return view('admin.oprations.staffUpdate');
+        });
+
+
         Route::post('staff', 'StaffController@create')->name('StaffCreate');
         Route::get('staffDelete/{id?}', 'StaffController@del')->name('StaffDelete');
         Route::get('staffEdit/{id?}', 'StaffController@edit')->name('StaffDelete');
@@ -265,7 +288,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('product/getVariant', 'ProductController@variant')->name('getVariant');
 
         // orders
-        Route::get('orders_list', function () {
+        Route::get('all_orders', function () {
             $data['orders'] = DB::table("orders");
             return view('admin.oprations.order.index', compact('data'));
         });
