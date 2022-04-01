@@ -130,11 +130,20 @@ Route::get('shopNow/{id}', function ($id) {
     return view('website.shopNow', compact('data'));
 });
 
+
 // ajax functions 
 Route::post('brand_ajax', [commanController::class, 'brand_ajax']);
 Route::post('color_ajax', [commanController::class, 'color_ajax']);
 Route::post('all_filter_ajax', [commanController::class, 'all_filter_ajax']);
 Route::post('shop/all_filter_ajax', [commanController::class, 'all_filter_ajax']);
+
+Route::post('admin/order_by_date_ajax', [commanController::class, 'order_by_date_ajax']);
+Route::get('admin/user_data_ajax/{uid}', [commanController::class, 'user_data_ajax']);
+Route::get('admin/varient_data_ajax/{pid}', [commanController::class, 'auto_fill_varient']);
+Route::post('admin/add_address', [commanController::class, 'add_address']);
+
+
+
 
 
 // home search
@@ -289,9 +298,24 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // orders
         Route::get('all_orders', function () {
-            $data['orders'] = DB::table("orders");
+            $data['orders'] = DB::table("orders")->orderBy('id', 'DESC')->paginate(50);
+            $address = DB::table('addresses')->get();
+            $data['address'] =[];
+            foreach($address as $addres){
+                $data['address'][$addres->id] = $addres;
+                }
             return view('admin.oprations.order.index', compact('data'));
         });
+        Route::get('new_order', function () {
+            $data=[];
+            $data['users'] = User::all();
+            $data['products'] = Product::all();
+            $data['categories'] = Category::pluck('name','id');
+            return view('admin.oprations.order.create', compact('data'));
+        });
+        
+        Route::post('order_create', [commanController::class, 'order_create'])->name('image_upload');
+
 
         // Products Blog
 

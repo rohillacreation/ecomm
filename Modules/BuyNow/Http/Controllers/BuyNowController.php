@@ -20,7 +20,6 @@ class BuyNowController extends Controller
     function address_selection(Request $request)
     {
 
-
         $pro_id = $request->product_id;
         $qty = $request->qty;
         if($request->variant_id == ''){

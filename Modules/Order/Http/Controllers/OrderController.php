@@ -27,8 +27,6 @@ class OrderController extends Controller
                 if ($request->ver_id > 0) {
                     $var_price = Variations::find($request->ver_id)->price;
                     $var_quantity = Variations::find($request->ver_id)->quantity;
-
-              
                     if ($var_quantity > $request->qty) {
                    
                         $api = new Api('rzp_test_Im6GcXajBHdHvh', '3xJ1wk8vIRfCOx9PvYPjkbsP');
