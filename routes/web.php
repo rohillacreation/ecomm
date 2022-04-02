@@ -205,21 +205,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 
 
-
-
-
-        //Staff routes
-        Route::get('staff', 'StaffController@index')->name('staff');
-        Route::get('staff_add', function () {
-            return view('admin.oprations.staffUpdate');
-        });
-
-
-        Route::post('staff', 'StaffController@create')->name('StaffCreate');
-        Route::get('staffDelete/{id?}', 'StaffController@del')->name('StaffDelete');
-        Route::get('staffEdit/{id?}', 'StaffController@edit')->name('StaffDelete');
-        Route::post('/staffupdate', 'StaffController@update')->name('StaffUpdate');
-
         //Attribute routes
 
         Route::get('attribute', [AttributeController::class, 'index'])->name('attribute');
