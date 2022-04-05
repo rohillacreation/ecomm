@@ -1,6 +1,6 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
 @include('admin.layouts.app')
@@ -12,7 +12,7 @@
     <div id="content" class="main-content wallet">
 
         <div class="allstd-page">
-            <h2> Admin / Order</h2>
+          
 
             <style>
                 * {
@@ -49,13 +49,22 @@
                 }
 
                 .border {
-                    box-shadow: 1px 1px 9px black;
+                    /* box-shadow: 1px 1px 9px black; */
                     height: 32px;
                     font-size: 17px;
                     border: 1px solid black;
                     border-radius: 3px;
                 }
-
+                .filterable input.form-control::placeholder {
+                    color: #c3c3c3;
+                    font-size: 13px;
+                }
+                .date::placeholder {
+                    color: #c3c3c3;
+                    font-size: 13px;
+                    font-weight: 100;
+                    padding-left: 8px;
+                }
                 input[type="date"]::-webkit-calendar-picker-indicator {
                     padding: 0px;
                     margin: 0px;
@@ -68,21 +77,31 @@
 
                 .date {
                     width: 100px;
+                    color: black;
+                    font-size: 13px;
+                }
+                .filterable .panel-heading {
+                    padding: 20px;
+                    background: #000;
+                    border-color: #000;
+                }
+                .filterable table.table tbody tr td {
+                    font-size: 15px;
                 }
             </style>
 
-            <div class="container">
-                <hr>
-                <div class="row">
+            <div class="container ">
+             <h2> Admin / Orders</h2>
+                <!-- <hr> -->
+                <div class="row pt-4">
                     <div class="panel panel-primary filterable">
                         <div class="panel-heading">
-                            <h2 class="panel-title">All Orders</h2>
-                            <br>
+                            <h4 class="panel-title text-white">All Orders</h4>
                             <div class="pull-right">
                                 <!-- <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button> -->
                             </div>
                         </div>
-                        <table class="table" style="border: 2px solid black;">
+                        <table class="table" style="border: 1px solid #dadada;">
                             <thead>
                                 <tr class="filters">
                                     <th><input type="text" class="form-control input border" placeholder="Sr No."></th>
@@ -99,7 +118,7 @@
                                 </tr>
 
                             </thead>
-                            <tbody id="table_data">
+                            <tbody id="table_data" style="text-align: center">
                                 <?php $i = 1; ?>
                                 @foreach($data['orders'] as $order)
                                 <tr>
@@ -107,8 +126,8 @@
                                     <td class="border">{{$order->order_id}}</td>
                                     <td class="border">{{$order->razorpay_payment_id}}</td>
                                     <td class="border">{{$order->amount}}</td>
-                                    <td class="border"><textarea>{{$data['address'][$order->address_id]->name}}, {{$data['address'][$order->address_id]->address}} <br>
-                                        ({{$data['address'][$order->address_id]->pincode}}) , {{$data['address'][$order->address_id]->state}} </textarea></td>
+                                    <td class="border">{{$data['address'][$order->address_id]->name}}, {{$data['address'][$order->address_id]->address}} 
+                                        ({{$data['address'][$order->address_id]->pincode}}) , {{$data['address'][$order->address_id]->state}} </td>
                                     <td class="border">{{$order->status}}</td>
                                     <td class="border">{{$order->created_at}}</td>
 

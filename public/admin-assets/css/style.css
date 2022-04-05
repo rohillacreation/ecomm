@@ -1977,3 +1977,223 @@ hr.ddd{border-top: 1px solid #ddd;}
     display: block;
 }
 
+
+
+
+/*dashboard css */
+.dashboard .dash_card {
+    background: #5d78ff;
+    border-radius: 10px;
+    padding: 37px 30px;
+    box-shadow: 0px 2px 4px 1px rgb(151 151 151 / 53%);
+}
+.dashboard .dash_card h5 i {
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    background: #ffffff29;
+    border-radius: 67%;
+    padding: 14px 17px;
+    font-size: 25px;
+}
+.dashboard .cardcol p {
+    margin-left: 20px;
+    color: #fff;
+}
+.dashboard .cardcol h5{
+    color: #fff;
+}
+.dashboard .cardcol p.yest {
+    font-weight: normal;
+    font-size: 11px;
+}
+.dashboard .cardcol h5 {
+    padding-left: 25px;
+}
+.dashboard .shipment {
+    background: #5d78ff;
+    padding: 20px 0px 1px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px 1px rgb(151 151 151 / 53%);
+}
+.dashboard .shipment p span {
+    float: right;
+    color: #fff;
+    padding-right: 30px;
+}
+.dashboard .shipment p {
+    color: #fff;
+}
+.dashboard .shipment ul li span {
+    color: #fff;
+    background: #ffffff29;
+    width: 60px;
+    height: 60px;
+    display: block;
+    border-radius: 77%;
+    line-height: 60px;
+}
+.dashboard .shipment ul li {
+    color: #fff;
+    padding-right: 47px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    list-style: none;
+}
+.dashboard .dash_card.ndr h5 i {
+    color: #000;
+    padding-top: 17px;
+}
+.dash_card.ndr .cardcol p {
+    color: #000;
+}
+.dash_card.ndr .cardcol h5 {
+    color: #000;
+}
+.dashboard .shipment.ndr p {
+    color: #000;
+}
+.dashboard .shipment.ndr p span{
+    color: #000;
+}
+.dashboard .shipment.ndr ul li {
+    color: #000;    padding-right: 125px;
+}
+.dashboard .shipment.ndr ul li span {
+    color: #000;
+    background: #d5d5d5;
+    margin: 0 auto;
+}
+.dashboard .dash_card.cod h5 i {
+    color: #000;
+    background: #d5d5d5;
+}
+.dashboard .dash_card.cod .cardcol p {
+    color: #000;
+}
+.dashboard .dash_card.cod .cardcol p.cost {
+    color: #5d78ff !important;
+    font-size: 20px;
+}
+.dashboard .dash_card.cod {
+    padding: 47px 30px;
+}
+.dashboard .shipment.cod p {
+    color: #000;
+}
+.dashboard .shipment.cod ul li span{
+    color: #000;
+    background: #d5d5d5;
+}
+.dashboard .shipment.cod ul li{color: #000;    padding-right: 136px;}
+.map_zone .zone p {
+    color: #000;
+    font-size: 15px;
+}
+.map_zone .zone ul li {
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 10px;
+}
+.map_zone .zone {
+    background: #fff;
+    box-shadow: 0px 2px 4px 1px rgb(151 151 151 / 53%);
+    padding: 20px 20px 0;
+    border-radius: 10px;
+}
+.map_zone .zone ul li p span.grey {
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 6px solid #c0bfbf;
+    border-radius: 72%;
+    float: left;
+    margin-right: 15px;
+}
+.map_zone .zone ul li p span.green{
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 6px solid #05a605;
+    border-radius: 72%;
+    float: left;
+    margin-right: 15px;
+}
+.map_zone .zone ul li p span.yellow{
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 6px solid yellow;
+    border-radius: 72%;
+    float: left;
+    margin-right: 15px;
+}
+.map_zone .zone ul li p span.red{
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 6px solid red;
+    border-radius: 72%;
+    float: left;
+    margin-right: 15px;
+}
+.map_zone .zone ul li p span.blue{
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border: 6px solid blueviolet;
+    border-radius: 72%;
+    float: left;
+    margin-right: 15px;
+}
+
+.map_zone .zone p span {
+    float: right;
+}
+.map_zone .zone ul li:last-child {
+    border-bottom: none;
+}
+.table_zone {
+    box-shadow: 0px 2px 4px 1px rgb(151 151 151 / 53%);
+    padding: 20px;
+    border-radius: 10px;
+}
+.table_zone p {
+    color: #000;
+}
+.table_zone table thead tr th {
+    font-size: 13px;
+    color: #000 !important;
+    vertical-align: top;
+}
+.table_zone table tbody tr td {
+    font-size: 11px;
+}
+.dashboard ul#myTab li.nav-item{
+    background: #d5d5d5;
+    color: #000;
+}
+.dashboard ul#myTab li.nav-item a{ 
+    color: #000;    font-weight: 500;
+}
+.dashboard .carousel-inner img {
+    height: 100px;
+    object-fit: cover;
+}
+.dashboard .carousel-indicators {
+    bottom: -40px;
+/* background-color: red; */
+}
+.dashboard .carousel-indicators li {
+    width: 5px;
+    height: 5px;
+    border-radius: 90%;
+    border: 2px solid #000;
+    background-color: #000000;
+}

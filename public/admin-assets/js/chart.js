@@ -110,6 +110,44 @@
                 });
 //========= end  Products seller
 
+
+//========= start  Performance 
+var ctx4 = document.getElementById("myChart4").getContext("2d");
+var myChart = new Chart(ctx4, {
+      // Type of Chart - bar, line, pie, doughnut, radar, polarArea
+      type: "doughnut",
+
+      data: {
+        labels,
+
+        datasets: [
+          {
+            data,
+            backgroundColor: ["#fd3995", "#5d78ff", "#00FFFF" , "#00008B","#800080" , "#FFA500" , "#95968b" , "#736F6E", "#C9C0BB" , "#504A4B" ,"#000000" , "#808080" , "#C0C0C0" ],
+
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+            ],
+
+            borderWidth: 1,
+          },
+        ],
+      },
+
+      // Configuration options go here
+      options: {
+        responsive: false,
+
+        legend: {
+          display: false,
+        },
+      },
+    });
+    //========= end  performance 
+    
+
  var ctx3 = document.getElementById("myChart3").getContext("2d");
  var myChart3 = new Chart(ctx3, {
    // Type of Chart - bar, line, pie, doughnut, radar, polarArea

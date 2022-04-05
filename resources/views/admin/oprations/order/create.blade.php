@@ -71,6 +71,34 @@
     .open-button:hover {
         opacity: 1;
     }
+    .filterable{
+        background: #000;
+        color: #fff;
+        padding: 20px;
+        box-shadow: 0px 2px 4px 1px rgb(196 195 195);
+        border-radius: 5px;
+        width: 100%;
+    }
+    .filterable h4{color: #fff;}
+    .filterable input::placeholder {
+        color: #bebebe;
+        font-weight: normal !important;
+    }
+    .filterable input#date::placeholder{
+        color: #bebebe;
+        font-weight: normal !important;
+    }
+    .filterable button {
+    background: #fff;
+    border: 1px solid #fff;
+    padding: 10px 35px;
+    }
+    .filterable button:hover {
+    border: 1px solid white;
+    background: black;
+    color: #fff;
+    }
+    
 </style>
 <!--  BEGIN MAIN CONTAINER  -->
 <div class="main-container multivendors" id="container">
@@ -79,15 +107,14 @@
     <div id="content" class="main-content wallet">
 
         <div class="allstd-page">
-            <h2> Admin / Order</h2>
             <div class="container">
-                <hr>
-                <div class="row">
+                
+            <h2> Admin / Orders</h2>
+                <!-- <hr> -->
+                <div class="row pt-5">
                     <div class="panel panel-primary filterable">
                         <div class="panel-heading">
-                            <h4 class="panel-title">create Order</h4>
-
-
+                            <h4 class="panel-title">Create Order</h4>
 
                             @if (\Session::has('success'))
                       <div class="alert alert-success">
@@ -96,13 +123,13 @@
                        </ul>
                   </div>
                 @endif
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <div class="border">
+                            <div class="tab-pane fade show active pt-5" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="">
                                     <form method="post" action="{{'/admin/order_create'}}">
                                         @csrf
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-4">
                                                 <label for="user">User</label>
                                                 <select id="user" placeholder="Select user" onchange="auto_fill(this.value)" name="user">
                                                     @foreach($data['users'] as $user)
@@ -112,14 +139,14 @@
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-3 ">
+                                            <div class="form-group col-md-4 ">
 
                                                 <label for="birthday">Order Date</label><br>
                                                 <input type="date" id="date" name="date" class="form-control" name="date">
 
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-4">
                                                 <label for="product">Product</label>
                                                 <select id="product" placeholder="Select user" name="product" onchange="auto_fill_varient(this.value)">
                                                     @foreach($data['products'] as $product)
@@ -128,25 +155,25 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3" id="varient">
+                                            <div class="form-group col-md-4" id="varient">
                                             <label for="varient">varient</label>
                                             <select placeholder="Select varient ">
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3" id="quantity">
+                                            <div class="form-group col-md-4" id="quantity">
                                             <label for="quantity">Quantity</label>
                                             <select placeholder="Select quantity ">
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3" id="address">                                            <label for="varient">address</label>
-                                            <label for="varient">address</label>
+                                            <div class="form-group col-md-4" id="address">                                            <label for="varient">address</label>
+                                            <!-- <label for="varient">Address</label> -->
                                             <select id="product" placeholder="Select address">
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-4 mt-4">
                                                 <button type="submit" > Submit</button>
                                             </div>
                                             <input type="hidden" name="product_id" id ="product_id" >    
